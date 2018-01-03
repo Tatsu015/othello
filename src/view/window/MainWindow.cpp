@@ -3,7 +3,8 @@
 #include "Common.h"
 #include "Scene.h"
 #include "CellItem.h"
-#include <QDebug>
+#include "Board.h"
+#include "Cell.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -12,10 +13,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
 
+    Board* board = new Board();
+
     Scene* scene = new Scene();
     for (int i = 0; i < 8; ++i) {
         for (int j = 0; j < 8; ++j) {
+            Cell* cell = new Cell();
+            board->add(cell);
             CellItem* cellItem = new CellItem(i*CELL_WIDTH, j*CELL_HEIGHT);
+            cellItem->setCell(cell);
             scene->addItem(cellItem);
         }
     }

@@ -1,9 +1,28 @@
 #include "Cell.h"
 
-Cell::Cell()
+Cell::Cell():
+    m_stoneColor(NONE)
 {
 }
 
 Cell::~Cell()
 {
+}
+
+bool Cell::isFilled()
+{
+    if(NONE == m_stoneColor){
+        return false;
+    }
+    return true;
+}
+
+Color Cell::stoneColor() const
+{
+    return m_stoneColor;
+}
+
+void Cell::setStoneColor(const Color& stoneColor)
+{
+    m_stoneColor = stoneColor;
 }

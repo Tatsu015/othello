@@ -21,17 +21,16 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
         return;
     }
 
-    CellItem* cell = dynamic_cast<CellItem*>(clickedItems.at(0));
-    if(nullptr == cell){
+    CellItem* cellItem = dynamic_cast<CellItem*>(clickedItems.at(0));
+    if(nullptr == cellItem){
         return;
     }
 
-    if(true == cell->existStone()){
+    if(true == cellItem->existStone()){
         return;
     }
 
     Color nowColor = Game::getInstance()->turn()->now();
-    StoneItem* stoneItem = new StoneItem(nowColor);
-    stoneItem->setParentItem(cell);
+    cellItem->setStoneItem(new StoneItem(nowColor));
     Game::getInstance()->turn()->change();
 }

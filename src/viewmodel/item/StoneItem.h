@@ -10,6 +10,11 @@ class StoneItem : public QGraphicsPathItem
 public:
     StoneItem(Color color, QGraphicsItem *parent = Q_NULLPTR);
     virtual ~StoneItem();
+
+    Color color() const;
+
+private:
+    Color m_color;
 };
 
 #endif // STONEITEM_H

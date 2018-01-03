@@ -2,6 +2,8 @@
 #include <QPen>
 #include <QBrush>
 #include "Common.h"
+#include "Cell.h"
+#include "StoneItem.h"
 
 CellItem::CellItem(qreal x, qreal y, QGraphicsItem* parent):QGraphicsPathItem(parent)
 {
@@ -17,13 +19,24 @@ CellItem::~CellItem()
 {
 }
 
+void CellItem::setStoneItem(StoneItem* stoneItem)
+{
+    stoneItem->setParentItem(this);
+    m_cell->setStoneColor(stoneItem->color());
+}
+
 bool CellItem::existStone()
 {
-    if(childItems().isEmpty()){
-        return false;
-    }
-    else{
+    if(m_cell->isFilled()){
         return true;
     }
+    else{
+        return false;
+    }
+}
+
+void CellItem::setCell(Cell* cell)
+{
+    m_cell = cell;
 }
 

@@ -9,7 +9,8 @@ const static QMap<Color ,Qt::GlobalColor> COLOR = {
     {WHITE, Qt::white}
 };
 
-StoneItem::StoneItem(Color color, QGraphicsItem* parent):QGraphicsPathItem(parent)
+StoneItem::StoneItem(Color color, QGraphicsItem* parent):QGraphicsPathItem(parent),
+    m_color(color)
 {
     QPainterPath p;
     p.addEllipse(STONE_WIDTH_OFFSET,STONE_HEIGHT_OFFSET,STONE_WIDTH,STONE_HEIGHT);
@@ -20,4 +21,9 @@ StoneItem::StoneItem(Color color, QGraphicsItem* parent):QGraphicsPathItem(paren
 
 StoneItem::~StoneItem()
 {
+}
+
+Color StoneItem::color() const
+{
+    return m_color;
 }
