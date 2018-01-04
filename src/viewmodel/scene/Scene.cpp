@@ -3,6 +3,7 @@
 #include "Common.h"
 #include "Game.h"
 #include "Turn.h"
+#include "Board.h"
 #include "CellItem.h"
 #include "StoneItem.h"
 
@@ -16,6 +17,7 @@ Scene::~Scene()
 
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
+
     QList<QGraphicsItem *> clickedItems = items(event->scenePos());
     if(clickedItems.isEmpty()){
         return;
@@ -26,11 +28,17 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
         return;
     }
 
-    if(true == cellItem->existStone()){
+    Color nowColor = Game::getInstance()->turn()->now();
+
+    if(!m_board->canPlaceStone(nowColor, cellItem->cell())){
         return;
     }
 
-    Color nowColor = Game::getInstance()->turn()->now();
     cellItem->setStoneItem(new StoneItem(nowColor));
     Game::getInstance()->turn()->change();
+}
+
+void Scene::setBoard(Board *board)
+{
+    m_board = board;
 }

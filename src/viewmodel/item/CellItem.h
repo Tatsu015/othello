@@ -17,7 +17,9 @@ public:
 
     bool existStone();
 
+    Cell *cell() const;
     void setCell(Cell* cell);
+
 
 private:
     Cell* m_cell = Q_NULLPTR;

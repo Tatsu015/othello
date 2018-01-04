@@ -35,8 +35,13 @@ bool CellItem::existStone()
     }
 }
 
+Cell *CellItem::cell() const
+{
+    return m_cell;
+}
+
 void CellItem::setCell(Cell* cell)
+
 {
     m_cell = cell;
 }
-

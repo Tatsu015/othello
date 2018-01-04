@@ -16,8 +16,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->graphicsView->setBackgroundBrush(Qt::gray);
 
     Board* board = new Board();
-
     Scene* scene = new Scene();
+    scene->setBoard(board);
+
     for (int i = 0; i < 8; ++i) {
         for (int j = 0; j < 8; ++j) {
             Cell* cell = new Cell();
