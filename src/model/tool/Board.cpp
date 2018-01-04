@@ -41,6 +41,9 @@ bool Board::canPlaceStone(Color color, Cell *cell)
         if(0 > checkIndex){
             continue;
         }
+        if(63 < checkIndex){
+            continue;
+        }
 
         Cell* checkCell = m_cells.at(checkIndex);
         Color checkStoneColor = checkCell->stoneColor();
