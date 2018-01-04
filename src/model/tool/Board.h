@@ -14,7 +14,10 @@ public:
     ~Board();
 
     void add(Cell* cell);
-    bool canPutStone(Color color);
+    bool canPutStoneSomeware(Color color);
+    bool canPutStone(Color color, unsigned int index);
+
+    Cell* cell(unsigned int index);
 
 private:
     QList<Cell*> m_cells;

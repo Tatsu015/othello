@@ -4,6 +4,14 @@
 
 enum Color {NONE, BLACK, WHITE};
 
+//extern enum Color otherColor(Color color)
+//{
+//    if(BLACK == color){
+//        return WHITE;
+//    }
+//    return BLACK;
+//}
+
 const double UNIT                = 80;
 const double CELL_SIZE_RAITO     = 0.9;
 const double CELL_WIDTH          = CELL_SIZE_RAITO * UNIT;

@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>395</width>
-    <height>355</height>
+    <width>630</width>
+    <height>670</height>
    </rect>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>630</width>
+    <height>670</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
@@ -16,7 +22,16 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <widget class="QGraphicsView" name="graphicsView"/>
+     <widget class="QGraphicsView" name="graphicsView">
+      <property name="sceneRect">
+       <rectf>
+        <x>0.000000000000000</x>
+        <y>0.000000000000000</y>
+        <width>0.000000000000000</width>
+        <height>0.000000000000000</height>
+       </rectf>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -25,7 +40,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>395</width>
+     <width>630</width>
      <height>22</height>
     </rect>
    </property>

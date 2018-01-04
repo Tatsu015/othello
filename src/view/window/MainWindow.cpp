@@ -3,6 +3,7 @@
 #include "Common.h"
 #include "Scene.h"
 #include "CellItem.h"
+#include "StoneItem.h"
 #include "Board.h"
 #include "Cell.h"
 
@@ -12,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
+    ui->graphicsView->setBackgroundBrush(Qt::gray);
 
     Board* board = new Board();
 
@@ -23,9 +25,21 @@ MainWindow::MainWindow(QWidget *parent) :
             CellItem* cellItem = new CellItem(i*CELL_WIDTH, j*CELL_HEIGHT);
             cellItem->setCell(cell);
             scene->addItem(cellItem);
+
+            if((3 == i) && (3 == j)){
+                cellItem->setStoneItem(new StoneItem(WHITE));
+            }
+            if((4 == i) && (3 == j)){
+                cellItem->setStoneItem(new StoneItem(BLACK));
+            }
+            if((3 == i) && (4 == j)){
+                cellItem->setStoneItem(new StoneItem(BLACK));
+            }
+            if((4 == i) && (4 == j)){
+                cellItem->setStoneItem(new StoneItem(WHITE));
+            }
         }
     }
-
     ui->graphicsView->setScene(scene);
 }
 
