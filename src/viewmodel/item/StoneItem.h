@@ -11,9 +11,9 @@ public:
     StoneItem(Color color, QGraphicsItem *parent = Q_NULLPTR);
     virtual ~StoneItem();
 
-    void updateView();
-
     Color color() const;
+
+    void setColor(const Color& color);
 
 private:
     Color m_color;

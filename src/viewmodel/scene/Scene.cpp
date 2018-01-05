@@ -37,11 +37,13 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 
     Color nowColor = Game::getInstance()->turn()->now();
 
-    if(!m_board->canPlaceStone(nowColor, cellItem->cell())){
+    QList<Board::Direction> directions = m_board->reversableDirection(nowColor, cellItem->cell());
+    if(0 == directions.count()){
         return;
     }
 
     cellItem->setStoneItem(new StoneItem(nowColor));
+    m_board->reverseStones(nowColor, cellItem->cell(), directions);
 
     Game::getInstance()->turn()->change();
     updateView();

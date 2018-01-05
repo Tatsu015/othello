@@ -26,18 +26,19 @@ public:
 
     void add(Cell* cell);
     bool canPlaceStoneSomeware(Color color);
-    bool canPlaceStone(Color color, Cell* cell);
-    void reverseStones(Cell *cell);
+    QList<Direction> reversableDirection(Color color, Cell* cell);
+    void reverseStones(Color color, Cell* putCell, QList<Direction> directions);
 
     Cell* cell(unsigned int index);
     QList<Cell*> cells() const;
 
 private:
     bool checkPlace(Color targetColor, Direction direction, Cell* cell);
+    void reverseStone(Color oppositeColor, Cell* neighborCell, Direction direction);
+    bool isInvalid(int index);
 
 private:
     QList<Cell*> m_cells;
-    QList<ReverseCellInfo*> m_reverseCellInfos;
 };
 
 #endif // BOARD_H
