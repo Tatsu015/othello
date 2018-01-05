@@ -5,6 +5,7 @@
 #include <QGraphicsScene>
 
 class Board;
+class CellItem;
 
 class Scene : public QGraphicsScene
 {
@@ -12,12 +13,16 @@ public:
     Scene(QObject *parent = Q_NULLPTR);
     virtual ~Scene();
 
-    virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
-
+    void addCellItem(CellItem* cellItem);
     void setBoard(Board *board);
+
+    virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    void updateView();
+
 
 private:
     Board* m_board = Q_NULLPTR;
+    QList<CellItem*> m_cellItems;
 };
 
 #endif // SCENE_H

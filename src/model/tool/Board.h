@@ -15,9 +15,9 @@ public:
                    LOWER_LEFT  = -7,
                    UPPER       = -1,
                    LOWER       = 1,
-                   UPPER_RIGHT = -9,
-                   RIGHT       = -8,
-                   LOWER_RIGHT = -7
+                   LOWER_RIGHT = 7,
+                   RIGHT       = 8,
+                   UPPER_RIGHT = 9,
                   };
 
 public:
@@ -27,15 +27,17 @@ public:
     void add(Cell* cell);
     bool canPlaceStoneSomeware(Color color);
     bool canPlaceStone(Color color, Cell* cell);
-    bool scanningCells();
+    void reverseStones(Cell *cell);
 
     Cell* cell(unsigned int index);
+    QList<Cell*> cells() const;
 
 private:
     bool checkPlace(Color targetColor, Direction direction, Cell* cell);
 
 private:
     QList<Cell*> m_cells;
+    QList<ReverseCellInfo*> m_reverseCellInfos;
 };
 
 #endif // BOARD_H

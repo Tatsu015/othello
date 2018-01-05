@@ -4,6 +4,7 @@
 #include "Game.h"
 #include "Turn.h"
 #include "Board.h"
+#include "Cell.h"
 #include "CellItem.h"
 #include "StoneItem.h"
 
@@ -13,6 +14,12 @@ Scene::Scene(QObject* parent):QGraphicsScene(parent)
 
 Scene::~Scene()
 {
+}
+
+void Scene::addCellItem(CellItem* cellItem)
+{
+    m_cellItems << cellItem;
+    addItem(cellItem);
 }
 
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
@@ -35,7 +42,16 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
     }
 
     cellItem->setStoneItem(new StoneItem(nowColor));
+
     Game::getInstance()->turn()->change();
+    updateView();
+}
+
+void Scene::updateView()
+{
+    foreach (CellItem* cellItem, m_cellItems) {
+        cellItem->updateView();
+    }
 }
 
 void Scene::setBoard(Board *board)

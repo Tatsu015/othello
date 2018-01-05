@@ -21,8 +21,16 @@ CellItem::~CellItem()
 
 void CellItem::setStoneItem(StoneItem* stoneItem)
 {
+    m_stoneItem = stoneItem;
     stoneItem->setParentItem(this);
     m_cell->setStoneColor(stoneItem->color());
+}
+
+void CellItem::updateView()
+{
+    if(nullptr != m_stoneItem){
+        m_stoneItem->updateView();
+    }
 }
 
 bool CellItem::existStone()

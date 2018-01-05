@@ -26,3 +26,8 @@ void Cell::setStoneColor(const Color& stoneColor)
 {
     m_stoneColor = stoneColor;
 }
+
+void Cell::reverseStone()
+{
+    m_stoneColor = anotherColor(m_stoneColor);
+}

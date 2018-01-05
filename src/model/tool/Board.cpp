@@ -38,10 +38,7 @@ bool Board::canPlaceStone(Color color, Cell *cell)
         int checkIndex = index + direction;
 
         //ignore not exist index
-        if(0 > checkIndex){
-            continue;
-        }
-        if(63 < checkIndex){
+        if((0 > checkIndex) || (63 < checkIndex)){
             continue;
         }
 
@@ -54,9 +51,12 @@ bool Board::canPlaceStone(Color color, Cell *cell)
                 return true;
             }
         }
-
     }
     return false;
+}
+
+void Board::reverseStones(Cell *cell)
+{
 }
 
 Cell*Board::cell(unsigned int index)
@@ -87,4 +87,9 @@ bool Board::checkPlace(Color targetColor, Board::Direction direction, Cell *cell
         return true;
     }
     return false;
+}
+
+QList<Cell*> Board::cells() const
+{
+    return m_cells;
 }

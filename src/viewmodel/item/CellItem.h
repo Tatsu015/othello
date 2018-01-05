@@ -15,6 +15,7 @@ public:
 
     void setStoneItem(StoneItem* stoneItem);
 
+    void updateView();
     bool existStone();
 
     Cell *cell() const;
@@ -22,6 +23,7 @@ public:
 
 
 private:
+    StoneItem* m_stoneItem = Q_NULLPTR;
     Cell* m_cell = Q_NULLPTR;
 };
 

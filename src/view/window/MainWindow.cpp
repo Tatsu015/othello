@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
             board->add(cell);
             CellItem* cellItem = new CellItem(i*CELL_WIDTH, j*CELL_HEIGHT);
             cellItem->setCell(cell);
-            scene->addItem(cellItem);
+            scene->addCellItem(cellItem);
 
             if((3 == i) && (3 == j)){
                 cellItem->setStoneItem(new StoneItem(WHITE));

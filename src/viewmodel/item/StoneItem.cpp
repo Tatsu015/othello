@@ -23,6 +23,12 @@ StoneItem::~StoneItem()
 {
 }
 
+void StoneItem::updateView()
+{
+    Qt::GlobalColor c = COLOR[m_color];
+    setBrush(c);
+}
+
 Color StoneItem::color() const
 {
     return m_color;

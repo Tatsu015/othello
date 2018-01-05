@@ -13,6 +13,7 @@ public:
 
     Color stoneColor() const;
     void setStoneColor(const Color& stoneColor);
+    void reverseStone();
 
 private:
     Color m_stoneColor;
