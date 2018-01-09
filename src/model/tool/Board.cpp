@@ -25,11 +25,6 @@ void Board::add(Cell* cell)
     m_cells << cell;
 }
 
-bool Board::canPlaceStoneSomeware(Color color)
-{
-    return true;
-}
-
 QList<Board::Direction> Board::reversableDirection(Color color, Cell* cell)
 {
     QList<Board::Direction> directions;
@@ -66,11 +61,6 @@ void Board::reverseStones(Color oppositeColor, Cell* putCell, QList<Board::Direc
         }
         reverseStone(oppositeColor, m_cells.at(checkIndex), d);
     }
-}
-
-Cell*Board::cell(unsigned int index)
-{
-    return m_cells.at(index);
 }
 
 bool Board::checkPlace(Color targetColor, Board::Direction direction, Cell *cell)
@@ -117,9 +107,4 @@ bool Board::isInvalid(int index)
         return true;
     }
     return false;
-}
-
-QList<Cell*> Board::cells() const
-{
-    return m_cells;
 }
