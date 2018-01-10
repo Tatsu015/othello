@@ -24,29 +24,49 @@ void Scene::addCellItem(CellItem* cellItem)
 
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
+    if(Qt::LeftButton == event->button()){
+        QList<QGraphicsItem *> clickedItems = items(event->scenePos());
+        if(clickedItems.isEmpty()){
+            return;
+        }
 
-    QList<QGraphicsItem *> clickedItems = items(event->scenePos());
-    if(clickedItems.isEmpty()){
-        return;
+        CellItem* cellItem = dynamic_cast<CellItem*>(clickedItems.at(0));
+        if(nullptr == cellItem){
+            return;
+        }
+
+        Color nowColor = Game::getInstance()->turn()->now();
+
+        QList<Board::Direction> directions = m_board->reversableDirection(nowColor, cellItem->cell());
+        if(0 == directions.count()){
+            return;
+        }
+
+        cellItem->setStoneItem(new StoneItem(nowColor));
+        m_board->reverseStones(nowColor, cellItem->cell(), directions);
+
+        Game::getInstance()->turn()->change();
+        updateView();
+        m_board->checkSelectableCells(nowColor);
     }
-
-    CellItem* cellItem = dynamic_cast<CellItem*>(clickedItems.at(0));
-    if(nullptr == cellItem){
-        return;
+    else if(Qt::RightButton == event->button()){
+        foreach (CellItem* cellItem, m_cellItems) {
+            Cell* cell = cellItem->cell();
+            QList<Cell*> cells = m_board->reversableCells();
+            if(cells.contains(cell)){
+                cellItem->setBrush(QBrush(Qt::yellow));
+            }
+        }
     }
+}
 
-    Color nowColor = Game::getInstance()->turn()->now();
-
-    QList<Board::Direction> directions = m_board->reversableDirection(nowColor, cellItem->cell());
-    if(0 == directions.count()){
-        return;
+void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
+{
+    if(Qt::RightButton == event->button()){
+        foreach (CellItem* cellItem, m_cellItems) {
+            cellItem->setBrush(QBrush(QColor("forestgreen")));
+        }
     }
-
-    cellItem->setStoneItem(new StoneItem(nowColor));
-    m_board->reverseStones(nowColor, cellItem->cell(), directions);
-
-    Game::getInstance()->turn()->change();
-    updateView();
 }
 
 void Scene::updateView()

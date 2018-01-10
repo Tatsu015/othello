@@ -17,6 +17,7 @@ public:
     void setBoard(Board *board);
 
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     void updateView();
 
 

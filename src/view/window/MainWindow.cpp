@@ -2,6 +2,8 @@
 #include "ui_MainWindow.h"
 #include "Common.h"
 #include "Scene.h"
+#include "Game.h"
+#include "Turn.h"
 #include "CellItem.h"
 #include "StoneItem.h"
 #include "Board.h"
@@ -41,6 +43,8 @@ MainWindow::MainWindow(QWidget *parent) :
             }
         }
     }
+
+    board->checkSelectableCells(Game::getInstance()->turn()->now());
     ui->graphicsView->setScene(scene);
 }
 

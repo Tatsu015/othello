@@ -25,6 +25,17 @@ void Board::add(Cell* cell)
     m_cells << cell;
 }
 
+void Board::checkSelectableCells(Color nowColor)
+{
+    m_selectableCells.clear();
+
+    foreach (Cell* cell, m_cells) {
+        if(true == isSelectableCell(cell, nowColor)){
+            m_selectableCells << cell;
+        }
+    }
+}
+
 QList<Board::Direction> Board::reversableDirection(Color color, Cell* cell)
 {
     QList<Board::Direction> directions;
@@ -35,7 +46,7 @@ QList<Board::Direction> Board::reversableDirection(Color color, Cell* cell)
         int checkIndex = index + direction;
 
         //ignore not exist index
-        if(isInvalid(checkIndex)){
+        if(isInvalidIndex(checkIndex)){
             continue;
         }
 
@@ -56,7 +67,7 @@ void Board::reverseStones(Color oppositeColor, Cell* putCell, QList<Board::Direc
 {
     foreach (Board::Direction d, directions) {
         int checkIndex = m_cells.indexOf(putCell) + d;
-        if(isInvalid(checkIndex)){
+        if(isInvalidIndex(checkIndex)){
             continue;
         }
         reverseStone(oppositeColor, m_cells.at(checkIndex), d);
@@ -68,7 +79,7 @@ bool Board::checkPlace(Color targetColor, Board::Direction direction, Cell *cell
     int checkIndex = m_cells.indexOf(cell) + direction;
 
     //ignore not exist index
-    if(isInvalid(checkIndex)){
+    if(isInvalidIndex(checkIndex)){
         return false;
     }
 
@@ -94,17 +105,118 @@ void Board::reverseStone(Color oppositeColor, Cell* neighborCell, Board::Directi
     while(oppositeColor != reverseCell->stoneColor()){
         reverseCell->reverseStone();
         int nextIndex = m_cells.indexOf(reverseCell) + direction;
-        if(isInvalid(nextIndex)){
+        if(isInvalidIndex(nextIndex)){
             return;
         }
         reverseCell = m_cells.at(nextIndex);
     }
 }
 
-bool Board::isInvalid(int index)
+bool Board::isInvalidIndex(int index)
 {
     if((0 > index) || (63 < index)){
         return true;
+    }
+    return false;
+}
+
+bool Board::isInvalidDirection(Cell* cell, Board::Direction direction)
+{
+    int index    = m_cells.indexOf(cell);
+    int tmpIndex = index + direction;
+
+    if((0 > tmpIndex) || (63 < tmpIndex)){
+        return true;
+    }
+    if(0 == ((index + 8) % 8)){
+        if((UPPER_LEFT == direction)
+                || (UPPER == direction)
+                || (UPPER_RIGHT == direction)){
+            return true;
+        }
+    }
+    if(7 == ((index + 8) % 8)){
+        if((LOWER_LEFT == direction)
+                || (LOWER == direction)
+                || (LOWER_RIGHT == direction)){
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Board::isSelectableCell(Cell* cell, Color nowColor)
+{
+    if(cell->isFilled()){
+        return false;
+    }
+    foreach (Board::Direction direction, validDirections(cell)) {
+        if(isOppositeStoneSameColor(cell, nowColor ,direction)){
+            return true;
+        }
+    }
+    return false;
+}
+
+QList<Board::Direction> Board::validDirections(Cell* cell)
+{
+    QList<Board::Direction> directions;
+    int centerIndex = m_cells.indexOf(cell);
+
+    foreach (Board::Direction direction, DIRECTIONS) {
+        int index = centerIndex + direction;
+        if((0 > index) || (63 < index)){
+            continue;
+        }
+        if(0 == (centerIndex % 8)){
+            if((UPPER_LEFT == direction)
+                    || (UPPER == direction)
+                    || (UPPER_RIGHT == direction)){
+                continue;
+            }
+        }
+        if(0 == (centerIndex % 7)){
+            if((LOWER_LEFT == direction)
+                    || (LOWER == direction)
+                    || (LOWER_RIGHT == direction)){
+                continue;
+            }
+        }
+        directions << direction;
+    }
+
+    return directions;
+}
+
+QList<Cell*> Board::reversableCells() const
+{
+    return m_selectableCells;
+}
+
+bool Board::isOppositeStoneSameColor(Cell* nowCell, Color nowColor, Board::Direction direction)
+{
+    int oppositeIndex = m_cells.indexOf(nowCell) + direction;
+    if(isInvalidIndex(oppositeIndex)){
+        return false;
+    }
+
+    Cell* oppositeCell = m_cells.at(oppositeIndex);
+    while(true){
+        if(NONE == oppositeCell->stoneColor()){
+            return false;
+        }
+        if(nowColor == oppositeCell->stoneColor()){
+            return true;
+        }
+
+        oppositeIndex += direction;
+        if(isInvalidIndex(oppositeIndex)){
+            return false;
+        }
+        if(isInvalidDirection(oppositeCell, direction)){
+            return false;
+        }
+        oppositeCell = m_cells.at(oppositeIndex);
     }
     return false;
 }
