@@ -28,7 +28,7 @@ TEST_F(Board_test, add)
     //ASSERT_EQ(, Eq());
 }
 
-TEST_F(Board_test, checkReversableCells)
+TEST_F(Board_test, checkSelectableCells)
 {
     Board board;
     Cell c[64];
@@ -42,7 +42,7 @@ TEST_F(Board_test, checkReversableCells)
     c[35].setStoneColor(BLACK);
     c[36].setStoneColor(WHITE);
 
-    board.checkReversableCells(WHITE);
+    board.checkSelectableCells(WHITE);
 
 //    ASSERT_EQ(, Eq());
 }
@@ -126,7 +126,7 @@ TEST_F(Board_test, isReversableCell)
 //    ASSERT_EQ(board.m_cells.at(2)->stoneColor(), WHITE);
 }
 
-TEST_F(Board_test, isOppositeSameColor)
+TEST_F(Board_test, isOppositeStoneSameColor)
 {
     Board board;
     Cell c[64];
@@ -140,129 +140,129 @@ TEST_F(Board_test, isOppositeSameColor)
     board.m_cells.at(8)->setStoneColor(WHITE);
     board.m_cells.at(9)->setStoneColor(BLACK);
     board.m_cells.at(10)->setStoneColor(BLACK);
-    ASSERT_EQ(board.isOppositeSameColor(board.m_cells.at(11), WHITE, Board::UPPER), true);
+    ASSERT_EQ(board.isOppositeStoneSameColor(board.m_cells.at(11), WHITE, Board::UPPER), true);
 
     board.m_cells.at(8)->setStoneColor(BLACK);
     board.m_cells.at(9)->setStoneColor(BLACK);
     board.m_cells.at(10)->setStoneColor(BLACK);
-    ASSERT_EQ(board.isOppositeSameColor(board.m_cells.at(11), WHITE, Board::UPPER), false);
+    ASSERT_EQ(board.isOppositeStoneSameColor(board.m_cells.at(11), WHITE, Board::UPPER), false);
 
     board.m_cells.at(8)->setStoneColor(NONE);
     board.m_cells.at(9)->setStoneColor(BLACK);
     board.m_cells.at(10)->setStoneColor(BLACK);
-    ASSERT_EQ(board.isOppositeSameColor(board.m_cells.at(11), WHITE, Board::UPPER), false);
+    ASSERT_EQ(board.isOppositeStoneSameColor(board.m_cells.at(11), WHITE, Board::UPPER), false);
 
     //UPPER_LEFT
     board.m_cells.at(0)->setStoneColor(WHITE);
     board.m_cells.at(9)->setStoneColor(BLACK);
     board.m_cells.at(18)->setStoneColor(BLACK);
-    ASSERT_EQ(board.isOppositeSameColor(board.m_cells.at(27), WHITE, Board::UPPER_LEFT), true);
+    ASSERT_EQ(board.isOppositeStoneSameColor(board.m_cells.at(27), WHITE, Board::UPPER_LEFT), true);
 
     board.m_cells.at(0)->setStoneColor(BLACK);
     board.m_cells.at(9)->setStoneColor(BLACK);
     board.m_cells.at(18)->setStoneColor(BLACK);
-    ASSERT_EQ(board.isOppositeSameColor(board.m_cells.at(27), WHITE, Board::UPPER_LEFT), false);
+    ASSERT_EQ(board.isOppositeStoneSameColor(board.m_cells.at(27), WHITE, Board::UPPER_LEFT), false);
 
     board.m_cells.at(0)->setStoneColor(NONE);
     board.m_cells.at(9)->setStoneColor(BLACK);
     board.m_cells.at(18)->setStoneColor(BLACK);
-    ASSERT_EQ(board.isOppositeSameColor(board.m_cells.at(27), WHITE, Board::UPPER_LEFT), false);
+    ASSERT_EQ(board.isOppositeStoneSameColor(board.m_cells.at(27), WHITE, Board::UPPER_LEFT), false);
 
     //LEFT
     board.m_cells.at(0)->setStoneColor(WHITE);
     board.m_cells.at(8)->setStoneColor(BLACK);
     board.m_cells.at(16)->setStoneColor(BLACK);
-    ASSERT_EQ(board.isOppositeSameColor(board.m_cells.at(24), WHITE, Board::LEFT), true);
+    ASSERT_EQ(board.isOppositeStoneSameColor(board.m_cells.at(24), WHITE, Board::LEFT), true);
 
     board.m_cells.at(0)->setStoneColor(BLACK);
     board.m_cells.at(8)->setStoneColor(BLACK);
     board.m_cells.at(16)->setStoneColor(BLACK);
-    ASSERT_EQ(board.isOppositeSameColor(board.m_cells.at(24), WHITE, Board::LEFT), false);
+    ASSERT_EQ(board.isOppositeStoneSameColor(board.m_cells.at(24), WHITE, Board::LEFT), false);
 
     board.m_cells.at(0)->setStoneColor(NONE);
     board.m_cells.at(8)->setStoneColor(BLACK);
     board.m_cells.at(16)->setStoneColor(BLACK);
-    ASSERT_EQ(board.isOppositeSameColor(board.m_cells.at(24), WHITE, Board::LEFT), false);
+    ASSERT_EQ(board.isOppositeStoneSameColor(board.m_cells.at(24), WHITE, Board::LEFT), false);
 
     //LOWER_LEFT
     board.m_cells.at(7)->setStoneColor(WHITE);
     board.m_cells.at(14)->setStoneColor(BLACK);
     board.m_cells.at(21)->setStoneColor(BLACK);
-    ASSERT_EQ(board.isOppositeSameColor(board.m_cells.at(28), WHITE, Board::LOWER_LEFT), true);
+    ASSERT_EQ(board.isOppositeStoneSameColor(board.m_cells.at(28), WHITE, Board::LOWER_LEFT), true);
 
     board.m_cells.at(7)->setStoneColor(BLACK);
     board.m_cells.at(14)->setStoneColor(BLACK);
     board.m_cells.at(21)->setStoneColor(BLACK);
-    ASSERT_EQ(board.isOppositeSameColor(board.m_cells.at(28), WHITE, Board::LOWER_LEFT), false);
+    ASSERT_EQ(board.isOppositeStoneSameColor(board.m_cells.at(28), WHITE, Board::LOWER_LEFT), false);
 
     board.m_cells.at(7)->setStoneColor(NONE);
     board.m_cells.at(14)->setStoneColor(BLACK);
     board.m_cells.at(21)->setStoneColor(BLACK);
-    ASSERT_EQ(board.isOppositeSameColor(board.m_cells.at(28), WHITE, Board::LOWER_LEFT), false);
+    ASSERT_EQ(board.isOppositeStoneSameColor(board.m_cells.at(28), WHITE, Board::LOWER_LEFT), false);
 
     //LOWER
     board.m_cells.at(7)->setStoneColor(WHITE);
     board.m_cells.at(6)->setStoneColor(BLACK);
     board.m_cells.at(5)->setStoneColor(BLACK);
-    ASSERT_EQ(board.isOppositeSameColor(board.m_cells.at(4), WHITE, Board::LOWER), true);
+    ASSERT_EQ(board.isOppositeStoneSameColor(board.m_cells.at(4), WHITE, Board::LOWER), true);
 
     board.m_cells.at(7)->setStoneColor(BLACK);
     board.m_cells.at(6)->setStoneColor(BLACK);
     board.m_cells.at(5)->setStoneColor(BLACK);
-    ASSERT_EQ(board.isOppositeSameColor(board.m_cells.at(4), WHITE, Board::LOWER), false);
+    ASSERT_EQ(board.isOppositeStoneSameColor(board.m_cells.at(4), WHITE, Board::LOWER), false);
 
     board.m_cells.at(7)->setStoneColor(NONE);
     board.m_cells.at(6)->setStoneColor(BLACK);
     board.m_cells.at(5)->setStoneColor(BLACK);
-    ASSERT_EQ(board.isOppositeSameColor(board.m_cells.at(4), WHITE, Board::LOWER), false);
+    ASSERT_EQ(board.isOppositeStoneSameColor(board.m_cells.at(4), WHITE, Board::LOWER), false);
 
     //LOWER_RIGHT
     board.m_cells.at(63)->setStoneColor(WHITE);
     board.m_cells.at(54)->setStoneColor(BLACK);
     board.m_cells.at(45)->setStoneColor(BLACK);
-    ASSERT_EQ(board.isOppositeSameColor(board.m_cells.at(36), WHITE, Board::LOWER_RIGHT), true);
+    ASSERT_EQ(board.isOppositeStoneSameColor(board.m_cells.at(36), WHITE, Board::LOWER_RIGHT), true);
 
     board.m_cells.at(63)->setStoneColor(BLACK);
     board.m_cells.at(54)->setStoneColor(BLACK);
     board.m_cells.at(45)->setStoneColor(BLACK);
-    ASSERT_EQ(board.isOppositeSameColor(board.m_cells.at(36), WHITE, Board::LOWER_RIGHT), false);
+    ASSERT_EQ(board.isOppositeStoneSameColor(board.m_cells.at(36), WHITE, Board::LOWER_RIGHT), false);
 
     board.m_cells.at(63)->setStoneColor(NONE);
     board.m_cells.at(54)->setStoneColor(BLACK);
     board.m_cells.at(45)->setStoneColor(BLACK);
-    ASSERT_EQ(board.isOppositeSameColor(board.m_cells.at(36), WHITE, Board::LOWER_RIGHT), false);
+    ASSERT_EQ(board.isOppositeStoneSameColor(board.m_cells.at(36), WHITE, Board::LOWER_RIGHT), false);
 
     //RIGHT
     board.m_cells.at(63)->setStoneColor(WHITE);
     board.m_cells.at(55)->setStoneColor(BLACK);
     board.m_cells.at(47)->setStoneColor(BLACK);
-    ASSERT_EQ(board.isOppositeSameColor(board.m_cells.at(39), WHITE, Board::RIGHT), true);
+    ASSERT_EQ(board.isOppositeStoneSameColor(board.m_cells.at(39), WHITE, Board::RIGHT), true);
 
     board.m_cells.at(63)->setStoneColor(BLACK);
     board.m_cells.at(55)->setStoneColor(BLACK);
     board.m_cells.at(47)->setStoneColor(BLACK);
-    ASSERT_EQ(board.isOppositeSameColor(board.m_cells.at(39), WHITE, Board::RIGHT), false);
+    ASSERT_EQ(board.isOppositeStoneSameColor(board.m_cells.at(39), WHITE, Board::RIGHT), false);
 
     board.m_cells.at(63)->setStoneColor(NONE);
     board.m_cells.at(55)->setStoneColor(BLACK);
     board.m_cells.at(47)->setStoneColor(BLACK);
-    ASSERT_EQ(board.isOppositeSameColor(board.m_cells.at(39), WHITE, Board::RIGHT), false);
+    ASSERT_EQ(board.isOppositeStoneSameColor(board.m_cells.at(39), WHITE, Board::RIGHT), false);
 
     //UPPER_RIGHT
     board.m_cells.at(56)->setStoneColor(WHITE);
     board.m_cells.at(49)->setStoneColor(BLACK);
     board.m_cells.at(42)->setStoneColor(BLACK);
-    ASSERT_EQ(board.isOppositeSameColor(board.m_cells.at(35), WHITE, Board::UPPER_RIGHT), true);
+    ASSERT_EQ(board.isOppositeStoneSameColor(board.m_cells.at(35), WHITE, Board::UPPER_RIGHT), true);
 
     board.m_cells.at(56)->setStoneColor(BLACK);
     board.m_cells.at(49)->setStoneColor(BLACK);
     board.m_cells.at(42)->setStoneColor(BLACK);
-    ASSERT_EQ(board.isOppositeSameColor(board.m_cells.at(35), WHITE, Board::UPPER_RIGHT), false);
+    ASSERT_EQ(board.isOppositeStoneSameColor(board.m_cells.at(35), WHITE, Board::UPPER_RIGHT), false);
 
     board.m_cells.at(56)->setStoneColor(NONE);
     board.m_cells.at(49)->setStoneColor(BLACK);
     board.m_cells.at(42)->setStoneColor(BLACK);
-    ASSERT_EQ(board.isOppositeSameColor(board.m_cells.at(35), WHITE, Board::UPPER_RIGHT), false);
+    ASSERT_EQ(board.isOppositeStoneSameColor(board.m_cells.at(35), WHITE, Board::UPPER_RIGHT), false);
 }
 
 TEST_F(Board_test, isInvalidIndex)
@@ -327,3 +327,17 @@ TEST_F(Board_test, isInvalidDirection)
     ASSERT_EQ(board.isInvalidDirection(&c[63], Board::LOWER_RIGHT), true);
 }
 
+TEST_F(Board_test, isSelectableCell)
+{
+    Board board;
+    Cell c[64];
+
+    for (int i = 0; i < 64; ++i) {
+        c[i].setStoneColor(NONE);
+        board.m_cells << &c[i];
+    }
+    c[27].setStoneColor(WHITE);
+    c[28].setStoneColor(BLACK);
+    c[35].setStoneColor(BLACK);
+    c[36].setStoneColor(WHITE);
+}
