@@ -120,12 +120,12 @@ bool Board::isInvalidIndex(int index)
     return false;
 }
 
-bool Board::isInvalidDirection(Cell* cell, Board::Direction direction)
+bool Board::isInsideFieldDirection(Cell* cell, Board::Direction direction)
 {
     int index    = m_cells.indexOf(cell);
     int tmpIndex = index + direction;
 
-    if((0 > tmpIndex) || (63 < tmpIndex)){
+    if(isInvalidIndex(tmpIndex)){
         return true;
     }
     if(0 == ((index + 8) % 8)){
@@ -145,44 +145,40 @@ bool Board::isInvalidDirection(Cell* cell, Board::Direction direction)
     return false;
 }
 
-bool Board::isSelectableCell(Cell* cell, Color nowColor)
+bool Board::isSelectableCell(Cell* checkCell, Color nowColor)
 {
-    if(cell->isFilled()){
+    if(checkCell->isFilled()){
         return false;
     }
-    foreach (Board::Direction direction, validDirections(cell)) {
-        if(isOppositeStoneSameColor(cell, nowColor ,direction)){
+    int checkCellIndex = m_cells.indexOf(checkCell);
+    foreach (Board::Direction direction, insideFieldDirections(checkCell)) {
+        int tmpIndex = checkCellIndex + direction;
+        if(isInvalidIndex(tmpIndex)){
+            continue;
+        }
+        Cell* neighborCell = m_cells.at(tmpIndex);
+
+        if(NONE == neighborCell->stoneColor()){
+            continue;
+        }
+        if(nowColor == neighborCell->stoneColor()){
+            continue;
+        }
+        if(isOppositeStoneSameColor(m_cells.at(tmpIndex), nowColor ,direction)){
             return true;
         }
     }
     return false;
 }
 
-QList<Board::Direction> Board::validDirections(Cell* cell)
+QList<Board::Direction> Board::insideFieldDirections(Cell* cell)
 {
     QList<Board::Direction> directions;
-    int centerIndex = m_cells.indexOf(cell);
 
     foreach (Board::Direction direction, DIRECTIONS) {
-        int index = centerIndex + direction;
-        if((0 > index) || (63 < index)){
-            continue;
+        if(!isInsideFieldDirection(cell, direction)){
+            directions << direction;
         }
-        if(0 == (centerIndex % 8)){
-            if((UPPER_LEFT == direction)
-                    || (UPPER == direction)
-                    || (UPPER_RIGHT == direction)){
-                continue;
-            }
-        }
-        if(0 == (centerIndex % 7)){
-            if((LOWER_LEFT == direction)
-                    || (LOWER == direction)
-                    || (LOWER_RIGHT == direction)){
-                continue;
-            }
-        }
-        directions << direction;
     }
 
     return directions;
@@ -193,9 +189,9 @@ QList<Cell*> Board::reversableCells() const
     return m_selectableCells;
 }
 
-bool Board::isOppositeStoneSameColor(Cell* nowCell, Color nowColor, Board::Direction direction)
+bool Board::isOppositeStoneSameColor(Cell* selectedAroundCell, Color nowColor, Board::Direction direction)
 {
-    int oppositeIndex = m_cells.indexOf(nowCell) + direction;
+    int oppositeIndex = m_cells.indexOf(selectedAroundCell) + direction;
     if(isInvalidIndex(oppositeIndex)){
         return false;
     }
@@ -213,7 +209,7 @@ bool Board::isOppositeStoneSameColor(Cell* nowCell, Color nowColor, Board::Direc
         if(isInvalidIndex(oppositeIndex)){
             return false;
         }
-        if(isInvalidDirection(oppositeCell, direction)){
+        if(isInsideFieldDirection(oppositeCell, direction)){
             return false;
         }
         oppositeCell = m_cells.at(oppositeIndex);

@@ -33,13 +33,13 @@ public:
     QList<Cell*> reversableCells() const;
 
 private:
-    bool isSelectableCell(Cell* cell, Color nowColor);
+    bool isSelectableCell(Cell* checkCell, Color nowColor);
     bool isOppositeStoneSameColor(Cell* cell, Color nowColor, Board::Direction direction);
     bool isInvalidIndex(int index);
-    bool isInvalidDirection(Cell* cell, Direction direction);
+    bool isInsideFieldDirection(Cell* cell, Direction direction);
     bool checkPlace(Color targetColor, Direction direction, Cell* cell);
     void reverseStone(Color oppositeColor, Cell* neighborCell, Direction direction);
-    QList<Direction> validDirections(Cell* cell);
+    QList<Direction> insideFieldDirections(Cell* cell);
 
 private:
     QList<Cell*> m_cells;

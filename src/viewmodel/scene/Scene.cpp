@@ -47,7 +47,7 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 
         Game::getInstance()->turn()->change();
         updateView();
-        m_board->checkSelectableCells(nowColor);
+        m_board->checkSelectableCells(Game::getInstance()->turn()->now());
     }
     else if(Qt::RightButton == event->button()){
         foreach (CellItem* cellItem, m_cellItems) {
