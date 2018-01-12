@@ -36,10 +36,14 @@ private:
     bool isSelectableCell(Cell* checkCell, Color nowColor);
     bool isOppositeStoneSameColor(Cell* cell, Color nowColor, Board::Direction direction);
     bool isInvalidIndex(int index);
-    bool isInsideFieldDirection(Cell* cell, Direction direction);
+    bool isOutsideFieldDirection(Cell* centerCell, Direction direction);
     bool checkPlace(Color targetColor, Direction direction, Cell* cell);
-    void reverseStone(Color oppositeColor, Cell* neighborCell, Direction direction);
+    void reverseStone(Color oppositeColor, Cell* cell, Direction direction);
     QList<Direction> insideFieldDirections(Cell* cell);
+
+    QList<Cell*> neighborCells(Cell* cell);
+    Cell* neighborCell(Cell* cell, Direction direction);
+
 
 private:
     QList<Cell*> m_cells;

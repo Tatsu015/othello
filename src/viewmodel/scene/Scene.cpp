@@ -54,7 +54,7 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
             Cell* cell = cellItem->cell();
             QList<Cell*> cells = m_board->reversableCells();
             if(cells.contains(cell)){
-                cellItem->setBrush(QBrush(Qt::yellow));
+                cellItem->setBrush(QBrush(QColor("gold")));
             }
         }
     }

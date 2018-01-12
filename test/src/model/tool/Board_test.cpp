@@ -332,50 +332,50 @@ TEST_F(Board_test, isInsideFieldDirection)
         board.m_cells << &c[i];
     }
 
-    ASSERT_EQ(board.isInsideFieldDirection(&c[0], Board::UPPER_LEFT),  true);
-    ASSERT_EQ(board.isInsideFieldDirection(&c[0], Board::UPPER),       true);
-    ASSERT_EQ(board.isInsideFieldDirection(&c[0], Board::UPPER_RIGHT), true);
-    ASSERT_EQ(board.isInsideFieldDirection(&c[0], Board::LEFT)       , true);
-    ASSERT_EQ(board.isInsideFieldDirection(&c[0], Board::RIGHT),       false);
-    ASSERT_EQ(board.isInsideFieldDirection(&c[0], Board::LOWER_LEFT),  true);
-    ASSERT_EQ(board.isInsideFieldDirection(&c[0], Board::LOWER),       false);
-    ASSERT_EQ(board.isInsideFieldDirection(&c[0], Board::LOWER_RIGHT), false);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[0], Board::UPPER_LEFT),  true);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[0], Board::UPPER),       true);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[0], Board::UPPER_RIGHT), true);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[0], Board::LEFT)       , true);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[0], Board::RIGHT),       false);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[0], Board::LOWER_LEFT),  true);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[0], Board::LOWER),       false);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[0], Board::LOWER_RIGHT), false);
 
-    ASSERT_EQ(board.isInsideFieldDirection(&c[1], Board::UPPER_LEFT),  true);
-    ASSERT_EQ(board.isInsideFieldDirection(&c[1], Board::UPPER),       false);
-    ASSERT_EQ(board.isInsideFieldDirection(&c[1], Board::UPPER_RIGHT), false);
-    ASSERT_EQ(board.isInsideFieldDirection(&c[1], Board::LEFT)       , true);
-    ASSERT_EQ(board.isInsideFieldDirection(&c[1], Board::RIGHT),       false);
-    ASSERT_EQ(board.isInsideFieldDirection(&c[1], Board::LOWER_LEFT),  true);
-    ASSERT_EQ(board.isInsideFieldDirection(&c[1], Board::LOWER),       false);
-    ASSERT_EQ(board.isInsideFieldDirection(&c[1], Board::LOWER_RIGHT), false);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[1], Board::UPPER_LEFT),  true);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[1], Board::UPPER),       false);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[1], Board::UPPER_RIGHT), false);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[1], Board::LEFT)       , true);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[1], Board::RIGHT),       false);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[1], Board::LOWER_LEFT),  true);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[1], Board::LOWER),       false);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[1], Board::LOWER_RIGHT), false);
 
-    ASSERT_EQ(board.isInsideFieldDirection(&c[8], Board::UPPER_LEFT),  true);
-    ASSERT_EQ(board.isInsideFieldDirection(&c[8], Board::UPPER),       true);
-    ASSERT_EQ(board.isInsideFieldDirection(&c[8], Board::UPPER_RIGHT), true);
-    ASSERT_EQ(board.isInsideFieldDirection(&c[8], Board::LEFT)       , false);
-    ASSERT_EQ(board.isInsideFieldDirection(&c[8], Board::RIGHT),       false);
-    ASSERT_EQ(board.isInsideFieldDirection(&c[8], Board::LOWER_LEFT),  false);
-    ASSERT_EQ(board.isInsideFieldDirection(&c[8], Board::LOWER),       false);
-    ASSERT_EQ(board.isInsideFieldDirection(&c[8], Board::LOWER_RIGHT), false);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[8], Board::UPPER_LEFT),  true);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[8], Board::UPPER),       true);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[8], Board::UPPER_RIGHT), true);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[8], Board::LEFT)       , false);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[8], Board::RIGHT),       false);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[8], Board::LOWER_LEFT),  false);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[8], Board::LOWER),       false);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[8], Board::LOWER_RIGHT), false);
 
-    ASSERT_EQ(board.isInsideFieldDirection(&c[15], Board::UPPER_LEFT),  false);
-    ASSERT_EQ(board.isInsideFieldDirection(&c[15], Board::UPPER),       false);
-    ASSERT_EQ(board.isInsideFieldDirection(&c[15], Board::UPPER_RIGHT), false);
-    ASSERT_EQ(board.isInsideFieldDirection(&c[15], Board::LEFT)       , false);
-    ASSERT_EQ(board.isInsideFieldDirection(&c[15], Board::RIGHT),       false);
-    ASSERT_EQ(board.isInsideFieldDirection(&c[15], Board::LOWER_LEFT),  true);
-    ASSERT_EQ(board.isInsideFieldDirection(&c[15], Board::LOWER),       true);
-    ASSERT_EQ(board.isInsideFieldDirection(&c[15], Board::LOWER_RIGHT), true);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[15], Board::UPPER_LEFT),  false);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[15], Board::UPPER),       false);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[15], Board::UPPER_RIGHT), false);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[15], Board::LEFT)       , false);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[15], Board::RIGHT),       false);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[15], Board::LOWER_LEFT),  true);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[15], Board::LOWER),       true);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[15], Board::LOWER_RIGHT), true);
 
-    ASSERT_EQ(board.isInsideFieldDirection(&c[63], Board::UPPER_LEFT),  false);
-    ASSERT_EQ(board.isInsideFieldDirection(&c[63], Board::UPPER),       false);
-    ASSERT_EQ(board.isInsideFieldDirection(&c[63], Board::UPPER_RIGHT), true);
-    ASSERT_EQ(board.isInsideFieldDirection(&c[63], Board::LEFT)       , false);
-    ASSERT_EQ(board.isInsideFieldDirection(&c[63], Board::RIGHT),       true);
-    ASSERT_EQ(board.isInsideFieldDirection(&c[63], Board::LOWER_LEFT),  true);
-    ASSERT_EQ(board.isInsideFieldDirection(&c[63], Board::LOWER),       true);
-    ASSERT_EQ(board.isInsideFieldDirection(&c[63], Board::LOWER_RIGHT), true);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[63], Board::UPPER_LEFT),  false);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[63], Board::UPPER),       false);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[63], Board::UPPER_RIGHT), true);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[63], Board::LEFT)       , false);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[63], Board::RIGHT),       true);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[63], Board::LOWER_LEFT),  true);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[63], Board::LOWER),       true);
+    ASSERT_EQ(board.isOutsideFieldDirection(&c[63], Board::LOWER_RIGHT), true);
 }
 
 TEST_F(Board_test, isSelectableCell)
@@ -427,4 +427,60 @@ TEST_F(Board_test, isSelectableCell)
 
     ASSERT_EQ(board.isSelectableCell(&c[45], BLACK), false);
     ASSERT_EQ(board.isSelectableCell(&c[45], WHITE), false);
+}
+
+TEST_F(Board_test, neighborCells)
+{
+    Board board;
+    Cell c[64];
+
+    for (int i = 0; i < 64; ++i) {
+        c[i].setStoneColor(NONE);
+        board.m_cells << &c[i];
+    }
+
+    QList<Cell*> cells = board.neighborCells(&c[0]);
+
+    ASSERT_EQ(cells.count(), 3);
+    ASSERT_EQ(cells.contains(&c[1]), true);
+    ASSERT_EQ(cells.contains(&c[9]), true);
+    ASSERT_EQ(cells.contains(&c[8]), true);
+}
+
+TEST_F(Board_test, neighborCell)
+{
+    Board board;
+    Cell c[64];
+
+    for (int i = 0; i < 64; ++i) {
+        c[i].setStoneColor(NONE);
+        board.m_cells << &c[i];
+    }
+
+    ASSERT_EQ(board.neighborCell(&c[0], Board::UPPER),        nullptr);
+    ASSERT_EQ(board.neighborCell(&c[0], Board::UPPER_LEFT),   nullptr);
+    ASSERT_EQ(board.neighborCell(&c[0], Board::LEFT),         nullptr);
+    ASSERT_EQ(board.neighborCell(&c[0], Board::LOWER_LEFT),   nullptr);
+    ASSERT_EQ(board.neighborCell(&c[0], Board::LOWER),        &c[1]);
+    ASSERT_EQ(board.neighborCell(&c[0], Board::LOWER_RIGHT),  &c[9]);
+    ASSERT_EQ(board.neighborCell(&c[0], Board::RIGHT),        &c[8]);
+    ASSERT_EQ(board.neighborCell(&c[0], Board::UPPER_RIGHT),  nullptr);
+
+    ASSERT_EQ(board.neighborCell(&c[9], Board::UPPER),        &c[8]);
+    ASSERT_EQ(board.neighborCell(&c[9], Board::UPPER_LEFT),   &c[0]);
+    ASSERT_EQ(board.neighborCell(&c[9], Board::LEFT),         &c[1]);
+    ASSERT_EQ(board.neighborCell(&c[9], Board::LOWER_LEFT),   &c[2]);
+    ASSERT_EQ(board.neighborCell(&c[9], Board::LOWER),        &c[10]);
+    ASSERT_EQ(board.neighborCell(&c[9], Board::LOWER_RIGHT),  &c[18]);
+    ASSERT_EQ(board.neighborCell(&c[9], Board::RIGHT),        &c[17]);
+    ASSERT_EQ(board.neighborCell(&c[9], Board::UPPER_RIGHT),  &c[16]);
+
+    ASSERT_EQ(board.neighborCell(&c[63], Board::UPPER),       &c[62]);
+    ASSERT_EQ(board.neighborCell(&c[63], Board::UPPER_LEFT),  &c[54]);
+    ASSERT_EQ(board.neighborCell(&c[63], Board::LEFT),        &c[55]);
+    ASSERT_EQ(board.neighborCell(&c[63], Board::LOWER_LEFT),  nullptr);
+    ASSERT_EQ(board.neighborCell(&c[63], Board::LOWER),       nullptr);
+    ASSERT_EQ(board.neighborCell(&c[63], Board::LOWER_RIGHT), nullptr);
+    ASSERT_EQ(board.neighborCell(&c[63], Board::RIGHT),       nullptr);
+    ASSERT_EQ(board.neighborCell(&c[63], Board::UPPER_RIGHT), nullptr);
 }
