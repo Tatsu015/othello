@@ -20,6 +20,9 @@ public:
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     void updateView();
 
+private:
+    CellItem* clickedCellItem(QPointF clickedScenePos);
+
 
 private:
     Board* m_board = Q_NULLPTR;

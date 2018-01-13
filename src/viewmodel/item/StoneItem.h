@@ -5,6 +5,8 @@
 #include <QGraphicsPathItem>
 #include "Common.h"
 
+class Stone;
+
 class StoneItem : public QGraphicsPathItem
 {
 public:
@@ -14,9 +16,11 @@ public:
     Color color() const;
 
     void setColor(const Color& color);
+    void setStone(Stone* stone);
 
 private:
     Color m_color;
+    Stone* m_stone = nullptr;
 };
 
 #endif // STONEITEM_H

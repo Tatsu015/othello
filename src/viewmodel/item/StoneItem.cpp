@@ -2,7 +2,6 @@
 #include <QBrush>
 #include <QPen>
 #include <QDebug>
-#include "Common.h"
 
 const static QMap<Color ,Qt::GlobalColor> COLOR = {
     {BLACK, Qt::black},
@@ -32,4 +31,9 @@ void StoneItem::setColor(const Color& color)
 {
     m_color = color;
     setBrush(COLOR[m_color]);
+}
+
+void StoneItem::setStone(Stone* stone)
+{
+    m_stone = stone;
 }

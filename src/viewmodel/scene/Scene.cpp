@@ -7,6 +7,7 @@
 #include "Cell.h"
 #include "CellItem.h"
 #include "StoneItem.h"
+#include "StoneFactory.h"
 
 Scene::Scene(QObject* parent):QGraphicsScene(parent)
 {
@@ -25,28 +26,24 @@ void Scene::addCellItem(CellItem* cellItem)
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
     if(Qt::LeftButton == event->button()){
-        QList<QGraphicsItem *> clickedItems = items(event->scenePos());
-        if(clickedItems.isEmpty()){
-            return;
-        }
-
-        CellItem* cellItem = dynamic_cast<CellItem*>(clickedItems.at(0));
+        CellItem* cellItem = clickedCellItem(event->scenePos());
         if(nullptr == cellItem){
             return;
         }
 
-        Color nowColor = Game::getInstance()->turn()->now();
-
-        if(!m_board->isReversable(cellItem->cell())){
+        Cell* cell = cellItem->cell();
+        if(!m_board->isReversable(cell)){
             return;
         }
 
-        cellItem->setStoneItem(new StoneItem(nowColor));
-        m_board->f(nowColor, cellItem->cell());
+        Color nowColor = Game::getInstance()->turn()->now();
+        StoneItem* stoneItem = StoneFactory::getInstance()->create(nowColor);
+        cellItem->setStoneItem(stoneItem);
+        m_board->reverseStones(nowColor, cell);
 
         Game::getInstance()->turn()->change();
-        updateView();
-        m_board->checkSelectableCells(Game::getInstance()->turn()->now());
+        Color nextColor = Game::getInstance()->turn()->now();
+        m_board->checkSelectableCells(nextColor);
     }
     else if(Qt::RightButton == event->button()){
         foreach (CellItem* cellItem, m_cellItems) {
@@ -57,6 +54,8 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
             }
         }
     }
+
+    updateView();
 }
 
 void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
@@ -73,6 +72,15 @@ void Scene::updateView()
     foreach (CellItem* cellItem, m_cellItems) {
         cellItem->updateView();
     }
+}
+
+CellItem*Scene::clickedCellItem(QPointF clickedScenePos)
+{
+    QList<QGraphicsItem *> clickedItems = items(clickedScenePos);
+    if(clickedItems.isEmpty()){
+        return nullptr;
+    }
+    return dynamic_cast<CellItem*>(clickedItems.at(0));
 }
 
 void Scene::setBoard(Board *board)

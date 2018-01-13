@@ -27,14 +27,12 @@ public:
 
     void add(Cell* cell);
     void checkSelectableCells(Color nowColor);
-    void f(Color color, Cell* putCell);
+    void reverseStones(Color color, Cell* putCell);
     bool isReversable(Cell* cell);
-    QList<Direction> reversableDirection(Color color, Cell* cell);
-    void reverseStones(Color color, Cell* putCell, QList<Direction> directions);
-
     QList<Cell*> reversableCells() const;
 
 private:
+    QList<Direction> reversableDirection(Color color, Cell* cell);
     bool isSelectableCell(Cell* checkCell, Color nowColor);
     bool isOppositeStoneSameColor(Cell* cell, Color nowColor, Board::Direction direction);
     bool isInvalidIndex(int index);

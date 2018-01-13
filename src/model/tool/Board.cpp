@@ -36,10 +36,17 @@ void Board::checkSelectableCells(Color nowColor)
     }
 }
 
-void Board::f(Color color, Cell* putCell)
+void Board::reverseStones(Color color, Cell* putCell)
 {
     QList<Board::Direction> directions = reversableDirection(color, putCell);
-    reverseStones(color, putCell, directions);
+
+    foreach (Board::Direction d, directions) {
+        int checkIndex = m_cells.indexOf(putCell) + d;
+        if(isInvalidIndex(checkIndex)){
+            continue;
+        }
+        reverseStone(color, m_cells.at(checkIndex), d);
+    }
 }
 
 bool Board::isReversable(Cell* cell)
@@ -75,17 +82,6 @@ QList<Board::Direction> Board::reversableDirection(Color color, Cell* cell)
         }
     }
     return directions;
-}
-
-void Board::reverseStones(Color oppositeColor, Cell* putCell, QList<Board::Direction> directions)
-{
-    foreach (Board::Direction d, directions) {
-        int checkIndex = m_cells.indexOf(putCell) + d;
-        if(isInvalidIndex(checkIndex)){
-            continue;
-        }
-        reverseStone(oppositeColor, m_cells.at(checkIndex), d);
-    }
 }
 
 bool Board::checkPlace(Color targetColor, Board::Direction direction, Cell *cell)
