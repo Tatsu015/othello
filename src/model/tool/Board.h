@@ -27,6 +27,8 @@ public:
 
     void add(Cell* cell);
     void checkSelectableCells(Color nowColor);
+    void f(Color color, Cell* putCell);
+    bool isReversable(Cell* cell);
     QList<Direction> reversableDirection(Color color, Cell* cell);
     void reverseStones(Color color, Cell* putCell, QList<Direction> directions);
 

@@ -36,6 +36,20 @@ void Board::checkSelectableCells(Color nowColor)
     }
 }
 
+void Board::f(Color color, Cell* putCell)
+{
+    QList<Board::Direction> directions = reversableDirection(color, putCell);
+    reverseStones(color, putCell, directions);
+}
+
+bool Board::isReversable(Cell* cell)
+{
+    if(m_selectableCells.contains(cell)){
+        return true;
+    }
+    return false;
+}
+
 QList<Board::Direction> Board::reversableDirection(Color color, Cell* cell)
 {
     QList<Board::Direction> directions;
@@ -156,7 +170,6 @@ bool Board::isSelectableCell(Cell* checkCell, Color nowColor)
         if(nullptr == cell){
             return false;
         }
-//    foreach (Cell* cell, neighborCells(checkCell)) {
         if(NONE == cell->stoneColor()){
             continue;
         }
