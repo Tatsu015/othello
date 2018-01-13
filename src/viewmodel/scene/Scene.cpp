@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include <QGraphicsSceneMouseEvent>
+#include <QMessageBox>
 #include "Common.h"
 #include "Game.h"
 #include "Turn.h"
@@ -27,7 +28,7 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
     if(Qt::LeftButton == event->button()){
         CellItem* cellItem = clickedCellItem(event->scenePos());
-        if(nullptr == cellItem){
+        if(Q_NULLPTR == cellItem){
             return;
         }
 
@@ -44,6 +45,7 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
         Game::getInstance()->turn()->change();
         Color nextColor = Game::getInstance()->turn()->now();
         m_board->checkSelectableCells(nextColor);
+        checkWinner(nowColor);
     }
     else if(Qt::RightButton == event->button()){
         foreach (CellItem* cellItem, m_cellItems) {
@@ -78,7 +80,7 @@ CellItem*Scene::clickedCellItem(QPointF clickedScenePos)
 {
     QList<QGraphicsItem *> clickedItems = items(clickedScenePos);
     if(clickedItems.isEmpty()){
-        return nullptr;
+        return Q_NULLPTR;
     }
     return dynamic_cast<CellItem*>(clickedItems.at(0));
 }
@@ -86,4 +88,20 @@ CellItem*Scene::clickedCellItem(QPointF clickedScenePos)
 void Scene::setBoard(Board *board)
 {
     m_board = board;
+}
+
+void Scene::checkWinner(Color nowColor)
+{
+    if(m_board->isBoardFilled()){
+        QString winner;
+        if(BLACK == nowColor){
+            winner = "Black";
+        }
+        else{
+            winner = "White";
+        }
+        QMessageBox::information(Q_NULLPTR,
+                                 "Infomation",
+                                 winner + " win !");
+    }
 }

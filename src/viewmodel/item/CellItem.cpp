@@ -28,7 +28,7 @@ void CellItem::setStoneItem(StoneItem* stoneItem)
 
 void CellItem::updateView()
 {
-    if(nullptr != m_stoneItem){
+    if(Q_NULLPTR != m_stoneItem){
         Color color = m_cell->stoneColor();
         m_stoneItem->setColor(color);
     }

@@ -20,7 +20,7 @@ public:
 
 private:
     Color m_color;
-    Stone* m_stone = nullptr;
+    Stone* m_stone = Q_NULLPTR;
 };
 
 #endif // STONEITEM_H

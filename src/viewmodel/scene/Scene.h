@@ -3,6 +3,7 @@
 
 
 #include <QGraphicsScene>
+#include "Common.h"
 
 class Board;
 class CellItem;
@@ -22,7 +23,7 @@ public:
 
 private:
     CellItem* clickedCellItem(QPointF clickedScenePos);
-
+    void checkWinner(Color nowColor);
 
 private:
     Board* m_board = Q_NULLPTR;

@@ -57,6 +57,16 @@ bool Board::isReversable(Cell* cell)
     return false;
 }
 
+bool Board::isBoardFilled()
+{
+    foreach (Cell* cell, m_cells) {
+        if(!cell->isFilled()){
+            return false;
+        }
+    }
+    return true;
+}
+
 QList<Board::Direction> Board::reversableDirection(Color color, Cell* cell)
 {
     QList<Board::Direction> directions;
@@ -116,7 +126,7 @@ void Board::reverseStone(Color oppositeColor, Cell* cell, Board::Direction direc
         reverseCell->reverseStone();
 
         reverseCell = neighborCell(reverseCell, direction);
-        if(nullptr == reverseCell){
+        if(Q_NULLPTR == reverseCell){
             return;
         }
     }
@@ -163,7 +173,7 @@ bool Board::isSelectableCell(Cell* checkCell, Color nowColor)
 
     foreach (Board::Direction direction, insideFieldDirections(checkCell)) {
         Cell* cell = neighborCell(checkCell, direction);
-        if(nullptr == cell){
+        if(Q_NULLPTR == cell){
             return false;
         }
         if(NONE == cell->stoneColor()){
@@ -198,7 +208,7 @@ QList<Cell*> Board::neighborCells(Cell* cell)
     int index = m_cells.indexOf(cell);
 
     foreach (Direction direction, insideFieldDirections(cell)) {
-        if(nullptr != neighborCell(cell, direction)){
+        if(Q_NULLPTR != neighborCell(cell, direction)){
             cells << m_cells.at(index + direction);
         }
     }
@@ -211,7 +221,7 @@ Cell*Board::neighborCell(Cell* cell, Board::Direction direction)
     int index = m_cells.indexOf(cell) + direction;
 
     if(isOutsideFieldDirection(cell, direction)){
-        return nullptr;
+        return Q_NULLPTR;
     }
     return m_cells.at(index);
 }
@@ -224,7 +234,7 @@ QList<Cell*> Board::reversableCells() const
 bool Board::isOppositeStoneSameColor(Cell* selectedAroundCell, Color nowColor, Board::Direction direction)
 {
     Cell* oppositeCell = neighborCell(selectedAroundCell, direction);
-    if(nullptr == oppositeCell){
+    if(Q_NULLPTR == oppositeCell){
         return false;
     }
 
@@ -237,7 +247,7 @@ bool Board::isOppositeStoneSameColor(Cell* selectedAroundCell, Color nowColor, B
         }
 
         oppositeCell = neighborCell(oppositeCell, direction);
-        if(nullptr == oppositeCell){
+        if(Q_NULLPTR == oppositeCell){
             return false;
         }
     }

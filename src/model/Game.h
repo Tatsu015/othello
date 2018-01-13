@@ -2,6 +2,8 @@
 #define GAME_H
 
 
+#include <qcompilerdetection.h>
+
 class Turn;
 
 class Game
@@ -14,7 +16,7 @@ public:
     Turn* turn() const;
 
 private:
-    Turn* m_turn = nullptr;
+    Turn* m_turn = Q_NULLPTR;
 
 private:
     Game();
