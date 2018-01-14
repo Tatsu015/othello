@@ -10,6 +10,8 @@ public:
     Stone(Color color);
     ~Stone();
 
+    Color color() const;
+    void setColor(const Color& color);
     void changeColor();
 
 private:

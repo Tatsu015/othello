@@ -1,17 +1,18 @@
 #include "Cell.h"
+#include "Stone.h"
 
-Cell::Cell():
-    m_stoneColor(NONE)
+Cell::Cell()
 {
 }
 
 Cell::~Cell()
 {
+    delete m_stone;
 }
 
 bool Cell::isFilled()
 {
-    if(NONE == m_stoneColor){
+    if(Q_NULLPTR == m_stone){
         return false;
     }
     return true;
@@ -19,15 +20,23 @@ bool Cell::isFilled()
 
 Color Cell::stoneColor() const
 {
-    return m_stoneColor;
-}
-
-void Cell::setStoneColor(const Color& stoneColor)
-{
-    m_stoneColor = stoneColor;
+    if(Q_NULLPTR == m_stone){
+        return NONE;
+    }
+    return m_stone->color();
 }
 
 void Cell::reverseStone()
 {
-    m_stoneColor = anotherColor(m_stoneColor);
+    m_stone->changeColor();
+}
+
+Stone* Cell::stone() const
+{
+    return m_stone;
+}
+
+void Cell::setStone(Stone* stone)
+{
+    m_stone = stone;
 }

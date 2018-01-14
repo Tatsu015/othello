@@ -12,13 +12,13 @@ class Board
 public:
     enum Direction{
         UPPER       = -1,
-        UPPER_LEFT  = -9,
-        LEFT        = -8,
-        LOWER_LEFT  = -7,
+        UPPER_LEFT  = -(BOARD_SIZE + 1),
+        LEFT        = -(BOARD_SIZE),
+        LOWER_LEFT  = -(BOARD_SIZE - 1),
         LOWER       = 1,
-        LOWER_RIGHT = 9,
-        RIGHT       = 8,
-        UPPER_RIGHT = 7,
+        LOWER_RIGHT = (BOARD_SIZE + 1),
+        RIGHT       = BOARD_SIZE,
+        UPPER_RIGHT = (BOARD_SIZE - 1),
     };
 
 public:
@@ -27,23 +27,20 @@ public:
 
     void add(Cell* cell);
     void checkSelectableCells(Color nowColor);
-    void reverseStones(Color color, Cell* putCell);
-    bool isReversable(Cell* cell);
+    bool canSelect(Cell* cell);
     bool isBoardFilled();
     QList<Cell*> reversableCells() const;
+    void reverseStonesAllDir(Cell* startCell);
 
 private:
-    QList<Direction> reversableDirection(Color color, Cell* cell);
-    bool isSelectableCell(Cell* checkCell, Color nowColor);
-    bool isOppositeStoneSameColor(Cell* cell, Color nowColor, Board::Direction direction);
-    bool isInvalidIndex(int index);
-    bool isOutsideFieldDirection(Cell* centerCell, Direction direction);
-    bool checkPlace(Color targetColor, Direction direction, Cell* cell);
-    void reverseStone(Color oppositeColor, Cell* cell, Direction direction);
-    QList<Direction> insideFieldDirections(Cell* cell);
-
-    QList<Cell*> neighborCells(Cell* cell);
-    Cell* neighborCell(Cell* cell, Direction direction);
+    void reverseStones(Cell* cell, Color oppositeColor, Direction direction);
+    void reverseStonesInLine(Cell* cell, Direction direction);
+    QList<Cell*> reversableNeighborCells(Cell* centerCell, Color putStoneColor);
+    bool isReversable(Cell* targetCell, Color putStoneColor);
+    bool isReversable(Cell* targetCell, Color putStoneColor, Direction direction);
+    QList<Cell*> neighborCells(Cell* centerCell);
+    Cell* neighborCell(Cell* centerCell, Direction direction);
+    bool isOutside(Cell* centerCell, Direction direction);
 
 
 private:

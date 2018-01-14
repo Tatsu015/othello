@@ -1,6 +1,7 @@
 #include "Scene.h"
 #include <QGraphicsSceneMouseEvent>
 #include <QMessageBox>
+#include <QDebug>
 #include "Common.h"
 #include "Game.h"
 #include "Turn.h"
@@ -32,19 +33,20 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
             return;
         }
 
+        Color nowColor = Game::getInstance()->turn()->now();
         Cell* cell = cellItem->cell();
-        if(!m_board->isReversable(cell)){
+        if(!m_board->canSelect(cell)){
             return;
         }
 
-        Color nowColor = Game::getInstance()->turn()->now();
         StoneItem* stoneItem = StoneFactory::getInstance()->create(nowColor);
         cellItem->setStoneItem(stoneItem);
-        m_board->reverseStones(nowColor, cell);
+        m_board->reverseStonesAllDir(cell);
 
         Game::getInstance()->turn()->change();
         Color nextColor = Game::getInstance()->turn()->now();
         m_board->checkSelectableCells(nextColor);
+        qDebug() << "next color " << nextColor;
         checkWinner(nowColor);
     }
     else if(Qt::RightButton == event->button()){

@@ -1,4 +1,5 @@
 #include "Board.h"
+#include <QDebug>
 #include "Cell.h"
 
 const static QVector<Board::Direction> ALL_DIRECTIONS = {
@@ -30,26 +31,13 @@ void Board::checkSelectableCells(Color nowColor)
     m_selectableCells.clear();
 
     foreach (Cell* cell, m_cells) {
-        if(true == isSelectableCell(cell, nowColor)){
+        if(true == isReversable(cell, nowColor)){
             m_selectableCells << cell;
         }
     }
 }
 
-void Board::reverseStones(Color color, Cell* putCell)
-{
-    QList<Board::Direction> directions = reversableDirection(color, putCell);
-
-    foreach (Board::Direction d, directions) {
-        int checkIndex = m_cells.indexOf(putCell) + d;
-        if(isInvalidIndex(checkIndex)){
-            continue;
-        }
-        reverseStone(color, m_cells.at(checkIndex), d);
-    }
-}
-
-bool Board::isReversable(Cell* cell)
+bool Board::canSelect(Cell* cell)
 {
     if(m_selectableCells.contains(cell)){
         return true;
@@ -67,59 +55,12 @@ bool Board::isBoardFilled()
     return true;
 }
 
-QList<Board::Direction> Board::reversableDirection(Color color, Cell* cell)
+QList<Cell*> Board::reversableCells() const
 {
-    QList<Board::Direction> directions;
-
-    unsigned int index = m_cells.indexOf(cell);
-
-    foreach (Board::Direction direction, ALL_DIRECTIONS) {
-        int checkIndex = index + direction;
-
-        //ignore not exist index
-        if(isInvalidIndex(checkIndex)){
-            continue;
-        }
-
-        Cell* checkCell = m_cells.at(checkIndex);
-        Color checkStoneColor = checkCell->stoneColor();
-
-        //ignore when neighbor cell have same color
-        if(anotherColor(color) == checkStoneColor){
-            if(checkPlace(color, direction, checkCell)){
-                directions << direction;
-            }
-        }
-    }
-    return directions;
+    return m_selectableCells;
 }
 
-bool Board::checkPlace(Color targetColor, Board::Direction direction, Cell *cell)
-{
-    int checkIndex = m_cells.indexOf(cell) + direction;
-
-    //ignore not exist index
-    if(isInvalidIndex(checkIndex)){
-        return false;
-    }
-
-    Cell* checkCell  = m_cells.at(checkIndex);
-    Color checkColor = checkCell->stoneColor();
-    if(NONE == checkColor){
-        return false;
-    }
-
-    if(targetColor == checkColor){
-        return true;
-    }
-
-    if(checkPlace(targetColor, direction, checkCell)){
-        return true;
-    }
-    return false;
-}
-
-void Board::reverseStone(Color oppositeColor, Cell* cell, Board::Direction direction)
+void Board::reverseStones(Cell* cell, Color oppositeColor, Board::Direction direction)
 {
     Cell* reverseCell = cell;
     while(oppositeColor != reverseCell->stoneColor()){
@@ -132,123 +73,118 @@ void Board::reverseStone(Color oppositeColor, Cell* cell, Board::Direction direc
     }
 }
 
-bool Board::isInvalidIndex(int index)
+void Board::reverseStonesAllDir(Cell* startCell)
 {
-    if((0 > index) || (63 < index)){
-        return true;
+    foreach (Direction d, ALL_DIRECTIONS) {
+        reverseStonesInLine(startCell, d);
+    }
+}
+
+void Board::reverseStonesInLine(Cell* startCell, Board::Direction direction)
+{
+    Cell* c = startCell;
+    Color oppositeColor = startCell->stoneColor();
+
+    if(isReversable(startCell, oppositeColor, direction)){
+        while(oppositeColor != neighborCell(c, direction)->stoneColor()){
+            c->reverseStone();
+            c = neighborCell(c, direction);
+        }
+    }
+}
+
+QList<Cell*> Board::reversableNeighborCells(Cell* centerCell, Color putStoneColor)
+{
+    QList<Cell*> cells;
+    foreach (Cell* c, neighborCells(centerCell)) {
+        if(isReversable(c, putStoneColor)){
+            cells << c;
+        }
+    }
+    return cells;
+}
+
+bool Board::isReversable(Cell* targetCell, Color putStoneColor)
+{
+    foreach (Direction d, ALL_DIRECTIONS) {
+        if(isReversable(targetCell, putStoneColor, d)){
+            return true;
+        }
     }
     return false;
 }
 
-bool Board::isOutsideFieldDirection(Cell* centerCell, Board::Direction direction)
+bool Board::isReversable(Cell* targetCell, Color putStoneColor, Board::Direction direction)
 {
-    int index    = m_cells.indexOf(centerCell);
-    int tmpIndex = index + direction;
-
-    if(isInvalidIndex(tmpIndex)){
-        return true;
+    Cell* neighborcell = neighborCell(targetCell, direction);
+    if(nullptr == neighborcell){
+        return false;
     }
-    if(0 == ((index + 8) % 8)){
-        if((UPPER_LEFT == direction) ||
-                (UPPER == direction) ||
-                (UPPER_RIGHT == direction)){
-            return true;
-        }
-    }
-    if(7 == ((index + 8) % 8)){
-        if((LOWER_LEFT == direction) ||
-                (LOWER == direction) ||
-                (LOWER_RIGHT == direction)){
-            return true;
-        }
-    }
-    return false;
-}
-
-bool Board::isSelectableCell(Cell* checkCell, Color nowColor)
-{
-    if(checkCell->isFilled()){
+    //target next color must another color
+    if(isSame(putStoneColor, neighborcell->stoneColor())){
         return false;
     }
 
-    foreach (Board::Direction direction, insideFieldDirections(checkCell)) {
-        Cell* cell = neighborCell(checkCell, direction);
-        if(Q_NULLPTR == cell){
+    while(true){
+        if(Q_NULLPTR == neighborcell){
             return false;
         }
-        if(NONE == cell->stoneColor()){
-            continue;
+        Color color = neighborcell->stoneColor();
+        if(isSame(NONE, color)){
+            return false;
         }
-        if(nowColor == cell->stoneColor()){
-            continue;
-        }
-        if(isOppositeStoneSameColor(cell, nowColor ,direction)){
+        if(isSame(putStoneColor, color)){
             return true;
         }
+
+        neighborcell = neighborCell(neighborcell, direction);
     }
     return false;
 }
 
-QList<Board::Direction> Board::insideFieldDirections(Cell* cell)
-{
-    QList<Board::Direction> directions;
-
-    foreach (Board::Direction direction, ALL_DIRECTIONS) {
-        if(!isOutsideFieldDirection(cell, direction)){
-            directions << direction;
-        }
-    }
-
-    return directions;
-}
-
-QList<Cell*> Board::neighborCells(Cell* cell)
+QList<Cell*> Board::neighborCells(Cell* centerCell)
 {
     QList<Cell*> cells;
-    int index = m_cells.indexOf(cell);
-
-    foreach (Direction direction, insideFieldDirections(cell)) {
-        if(Q_NULLPTR != neighborCell(cell, direction)){
-            cells << m_cells.at(index + direction);
+    foreach (Direction direction, ALL_DIRECTIONS) {
+        Cell* c = neighborCell(centerCell, direction);
+        if(nullptr != c){
+            cells << c;
         }
     }
 
     return cells;
 }
 
-Cell*Board::neighborCell(Cell* cell, Board::Direction direction)
+Cell*Board::neighborCell(Cell* centerCell, Board::Direction direction)
 {
-    int index = m_cells.indexOf(cell) + direction;
+    int index = m_cells.indexOf(centerCell) + direction;
 
-    if(isOutsideFieldDirection(cell, direction)){
+    if(isOutside(centerCell, direction)){
         return Q_NULLPTR;
     }
     return m_cells.at(index);
 }
 
-QList<Cell*> Board::reversableCells() const
+bool Board::isOutside(Cell* targetCell, Board::Direction direction)
 {
-    return m_selectableCells;
-}
+    int targetCellIndex = m_cells.indexOf(targetCell);
+    int nextCellIndex   = targetCellIndex + direction;
 
-bool Board::isOppositeStoneSameColor(Cell* selectedAroundCell, Color nowColor, Board::Direction direction)
-{
-    Cell* oppositeCell = neighborCell(selectedAroundCell, direction);
-    if(Q_NULLPTR == oppositeCell){
-        return false;
+    if((0 > nextCellIndex) || (MAX_INDEX < nextCellIndex)){
+        return true;
     }
-
-    while(true){
-        if(NONE == oppositeCell->stoneColor()){
-            return false;
-        }
-        if(nowColor == oppositeCell->stoneColor()){
+    if(0 == ((targetCellIndex + BOARD_SIZE) % BOARD_SIZE)){
+        if((UPPER_LEFT == direction) ||
+                (UPPER == direction) ||
+                (UPPER_RIGHT == direction)){
             return true;
         }
-
-        oppositeCell = neighborCell(oppositeCell, direction);
-        if(Q_NULLPTR == oppositeCell){
-            return false;
+    }
+    if((BOARD_SIZE-1) == ((targetCellIndex + BOARD_SIZE) % BOARD_SIZE)){
+        if((LOWER_LEFT == direction) ||
+                (LOWER == direction) ||
+                (LOWER_RIGHT == direction)){
+            return true;
         }
     }
     return false;

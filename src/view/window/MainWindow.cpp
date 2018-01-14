@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 #include "Common.h"
+#include "StoneFactory.h"
 #include "Scene.h"
 #include "Game.h"
 #include "Turn.h"
@@ -21,25 +22,29 @@ MainWindow::MainWindow(QWidget *parent) :
     Scene* scene = new Scene();
     scene->setBoard(board);
 
-    for (int i = 0; i < 8; ++i) {
-        for (int j = 0; j < 8; ++j) {
+    for (unsigned int i = 0; i < BOARD_SIZE; ++i) {
+        for (unsigned int j = 0; j < BOARD_SIZE; ++j) {
             Cell* cell = new Cell();
             board->add(cell);
             CellItem* cellItem = new CellItem(i*CELL_WIDTH, j*CELL_HEIGHT);
             cellItem->setCell(cell);
             scene->addCellItem(cellItem);
 
-            if((3 == i) && (3 == j)){
-                cellItem->setStoneItem(new StoneItem(WHITE));
+            if((((BOARD_SIZE/2) - 1) == i) && (((BOARD_SIZE/2) - 1) == j)){
+                StoneItem* stoneItem = StoneFactory::getInstance()->create(WHITE);
+                cellItem->setStoneItem(stoneItem);
             }
-            if((4 == i) && (3 == j)){
-                cellItem->setStoneItem(new StoneItem(BLACK));
+            if(((BOARD_SIZE/2) == i) && (((BOARD_SIZE/2) - 1) == j)){
+                StoneItem* stoneItem = StoneFactory::getInstance()->create(BLACK);
+                cellItem->setStoneItem(stoneItem);
             }
-            if((3 == i) && (4 == j)){
-                cellItem->setStoneItem(new StoneItem(BLACK));
+            if((((BOARD_SIZE/2) - 1) == i) && ((BOARD_SIZE/2) == j)){
+                StoneItem* stoneItem = StoneFactory::getInstance()->create(BLACK);
+                cellItem->setStoneItem(stoneItem);
             }
-            if((4 == i) && (4 == j)){
-                cellItem->setStoneItem(new StoneItem(WHITE));
+            if(((BOARD_SIZE/2) == i) && ((BOARD_SIZE/2) == j)){
+                StoneItem* stoneItem = StoneFactory::getInstance()->create(WHITE);
+                cellItem->setStoneItem(stoneItem);
             }
         }
     }

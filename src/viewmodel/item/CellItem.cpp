@@ -23,14 +23,12 @@ void CellItem::setStoneItem(StoneItem* stoneItem)
 {
     m_stoneItem = stoneItem;
     stoneItem->setParentItem(this);
-    m_cell->setStoneColor(stoneItem->color());
 }
 
 void CellItem::updateView()
 {
     if(Q_NULLPTR != m_stoneItem){
-        Color color = m_cell->stoneColor();
-        m_stoneItem->setColor(color);
+        m_stoneItem->updateView();
     }
 }
 

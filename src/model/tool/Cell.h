@@ -1,7 +1,11 @@
 #ifndef CELL_H
 #define CELL_H
 
+
+#include <qcompilerdetection.h>
 #include "Common.h"
+
+class Stone;
 
 class Cell
 {
@@ -15,8 +19,11 @@ public:
     void setStoneColor(const Color& stoneColor);
     void reverseStone();
 
+    Stone* stone() const;
+    void setStone(Stone* stone);
+
 private:
-    Color m_stoneColor;
+    Stone* m_stone = Q_NULLPTR;
 };
 
 #endif // CELL_H

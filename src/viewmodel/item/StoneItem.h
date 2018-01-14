@@ -16,10 +16,11 @@ public:
     Color color() const;
 
     void setColor(const Color& color);
+    Stone* stone() const;
     void setStone(Stone* stone);
+    void updateView();
 
 private:
-    Color m_color;
     Stone* m_stone = Q_NULLPTR;
 };
 

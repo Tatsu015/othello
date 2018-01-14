@@ -12,6 +12,25 @@ inline enum Color anotherColor(Color color)
     return BLACK;
 }
 
+inline bool isSame(Color color1, Color color2)
+{
+    if(color1 == color2){
+        return true;
+    }
+    return false;
+}
+
+inline bool isAnother(Color color1, Color color2)
+{
+    if(anotherColor(color1) == color2){
+        return true;
+    }
+    return false;
+}
+
+
+const unsigned int BOARD_SIZE    = 4;
+const unsigned int MAX_INDEX     = ((BOARD_SIZE*BOARD_SIZE) - 1);
 const double UNIT                = 80;
 const double CELL_SIZE_RAITO     = 0.9;
 const double CELL_WIDTH          = CELL_SIZE_RAITO * UNIT;

@@ -35,6 +35,7 @@ INCLUDEPATH += \
     ../../src \
     ../../src/model/tool \
     ../../src/model \
+    ../../src/controller/factory \
     ../../src/view/window \
     ../../src/viewmodel/item \
     ../../src/viewmodel/scene
@@ -42,8 +43,10 @@ INCLUDEPATH += \
 SOURCES += \
     ../../src/model/tool/Board.cpp \
     ../../src/model/tool/Cell.cpp \
+    ../../src/model/tool/Stone.cpp \
     ../../src/model/Game.cpp \
     ../../src/model/Turn.cpp \
+    ../../src/controller/factory/StoneFactory.cpp \
     ../../src/viewmodel/item/CellItem.cpp \
     ../../src/viewmodel/item/StoneItem.cpp \
     ../../src/viewmodel/scene/Scene.cpp \
@@ -51,8 +54,10 @@ SOURCES += \
 HEADERS += \
     ../../src/model/tool/Board.h \
     ../../src/model/tool/Cell.h \
+    ../../src/model/tool/Stone.h \
     ../../src/model/Game.h \
     ../../src/model/Turn.h \
+    ../../src/controller/factory/StoneFactory.h \
     ../../src/viewmodel/item/CellItem.h \
     ../../src/viewmodel/item/StoneItem.h \
     ../../src/viewmodel/scene/Scene.h \
