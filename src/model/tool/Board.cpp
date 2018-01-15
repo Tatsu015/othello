@@ -28,7 +28,7 @@ void Board::add(Cell* cell)
     m_cells << cell;
 }
 
-void Board::checkSelectableCells(Color nowColor)
+void Board::checkSelectableCells(const Color& nowColor)
 {
     m_cacheSelectableCells.clear();
 
@@ -72,7 +72,7 @@ void Board::reverseStones(Cell* startCell)
     }
 }
 
-unsigned int Board::stoneCount(Color color)
+unsigned int Board::stoneCount(const Color& color)
 {
     unsigned int count = 0;
     foreach (Cell* c, m_cells) {
@@ -87,7 +87,7 @@ unsigned int Board::stoneCount(Color color)
     return count;
 }
 
-void Board::reverseStones(Cell* startCell, Board::Direction direction)
+void Board::reverseStones(Cell* startCell, const Board::Direction& direction)
 {
     Cell* c = startCell;
     Color oppositeColor = startCell->stoneColor();
@@ -100,7 +100,7 @@ void Board::reverseStones(Cell* startCell, Board::Direction direction)
     }
 }
 
-QList<Cell*> Board::reversableNeighborCells(Cell* centerCell, Color putStoneColor)
+QList<Cell*> Board::reversableNeighborCells(Cell* centerCell, const Color& putStoneColor)
 {
     QList<Cell*> cells;
     foreach (Cell* c, neighborCells(centerCell)) {
@@ -111,7 +111,7 @@ QList<Cell*> Board::reversableNeighborCells(Cell* centerCell, Color putStoneColo
     return cells;
 }
 
-bool Board::isReversable(Cell* centerCell, Color putStoneColor)
+bool Board::isReversable(Cell* centerCell, const Color& putStoneColor)
 {
     foreach (Direction d, DIRECTIONS) {
         if(isReversable(centerCell, putStoneColor, d)){
@@ -121,7 +121,7 @@ bool Board::isReversable(Cell* centerCell, Color putStoneColor)
     return false;
 }
 
-bool Board::isReversable(Cell* startCell, Color putStoneColor, Board::Direction direction)
+bool Board::isReversable(Cell* startCell, const Color& putStoneColor, const Board::Direction& direction)
 {
     Cell* neighborcell = neighborCell(startCell, direction);
     if(nullptr == neighborcell){
@@ -162,7 +162,7 @@ QList<Cell*> Board::neighborCells(Cell* centerCell)
     return cells;
 }
 
-Cell*Board::neighborCell(Cell* centerCell, Board::Direction direction)
+Cell*Board::neighborCell(Cell* centerCell, const Board::Direction& direction)
 {
     int index = m_cells.indexOf(centerCell) + direction;
 
@@ -172,7 +172,7 @@ Cell*Board::neighborCell(Cell* centerCell, Board::Direction direction)
     return m_cells.at(index);
 }
 
-bool Board::isOutside(Cell* baseCell, Board::Direction direction)
+bool Board::isOutside(Cell* baseCell, const Board::Direction& direction)
 {
     int baseCellIndex = m_cells.indexOf(baseCell);
     int nextCellIndex   = baseCellIndex + direction;

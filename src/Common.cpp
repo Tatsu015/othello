@@ -2,7 +2,7 @@
 #include <QString>
 #include <QMap>
 
-enum Color anotherColor(Color color)
+enum Color anotherColor(const Color& color)
 {
     if(BLACK == color){
         return WHITE;
@@ -10,7 +10,7 @@ enum Color anotherColor(Color color)
     return BLACK;
 }
 
-QString toString(Color color)
+QString toString(const Color& color)
 {
     static QMap<Color, QString> COLOR_TO_STR{
         {NONE, "None"},
@@ -21,7 +21,7 @@ QString toString(Color color)
     return COLOR_TO_STR[color];
 }
 
-bool isSame(Color color1, Color color2)
+bool isSame(const Color& color1, const Color& color2)
 {
     if(color1 == color2){
         return true;
@@ -29,7 +29,7 @@ bool isSame(Color color1, Color color2)
     return false;
 }
 
-bool isAnother(Color color1, Color color2)
+bool isAnother(const Color& color1, const Color& color2)
 {
     if(anotherColor(color1) == color2){
         return true;

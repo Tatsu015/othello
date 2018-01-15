@@ -24,10 +24,10 @@ public:
 private:
     CellItem* clickedCellItem(QPointF clickedScenePos);
     bool isEndGame();
-    bool isDoubleSkip(Color nextColor);
+    bool isDoubleSkip(const Color& nextColor);
     bool needSkip();
     Color winnerColor();
-    void displayResult(Color winnerColor);
+    void displayResult(const Color& winnerColor);
 
 private:
     Board* m_board = Q_NULLPTR;

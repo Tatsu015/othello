@@ -148,7 +148,7 @@ bool Scene::isEndGame()
     return false;
 }
 
-bool Scene::isDoubleSkip(Color nextColor)
+bool Scene::isDoubleSkip(const Color& nextColor)
 {
     m_board->checkSelectableCells(nextColor);
     if(needSkip()){
@@ -181,7 +181,7 @@ Color Scene::winnerColor()
     }
 }
 
-void Scene::displayResult(Color winnerColor)
+void Scene::displayResult(const Color& winnerColor)
 {
     QString message;
     if(NONE == winnerColor){

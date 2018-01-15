@@ -16,7 +16,6 @@ public:
 private:
     StoneFactory();
     ~StoneFactory();
-
 };
 
 #endif // STONEFACTORY_H

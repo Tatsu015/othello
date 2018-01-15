@@ -27,27 +27,27 @@ public:
 
     void add(Cell* cell);
 
-    void checkSelectableCells(Color nowColor);
+    void checkSelectableCells(const Color& nowColor);
 
     bool isSelectable(Cell* cell);
     bool isFilled();
 
     void reverseStones(Cell* startCell);
 
-    unsigned int stoneCount(Color color);
+    unsigned int stoneCount(const Color& color);
     QList<Cell*> cacheSelectableCells() const;
 
 private:
-    void reverseStones(Cell* startCell, Direction direction);
+    void reverseStones(Cell* startCell, const Direction& direction);
 
-    QList<Cell*> reversableNeighborCells(Cell* centerCell, Color putStoneColor);
-    bool isReversable(Cell* centerCell, Color putStoneColor);
-    bool isReversable(Cell* startCell, Color putStoneColor, Direction direction);
+    QList<Cell*> reversableNeighborCells(Cell* centerCell, const Color& putStoneColor);
+    bool isReversable(Cell* centerCell, const Color& putStoneColor);
+    bool isReversable(Cell* startCell, const Color& putStoneColor, const Direction& direction);
 
     QList<Cell*> neighborCells(Cell* centerCell);
-    Cell* neighborCell(Cell* centerCell, Direction direction);
+    Cell* neighborCell(Cell* centerCell, const Direction& direction);
 
-    bool isOutside(Cell* baseCell, Direction direction);
+    bool isOutside(Cell* baseCell, const Direction& direction);
 
 private:
     QList<Cell*> m_cells;
