@@ -12,13 +12,13 @@ enum Color anotherColor(Color color)
 
 QString toString(Color color)
 {
-    static QMap<Color, QString> MAP{
+    static QMap<Color, QString> COLOR_TO_STR{
         {NONE, "None"},
         {WHITE, "White"},
         {BLACK, "Black"}
     };
 
-    return MAP[color];
+    return COLOR_TO_STR[color];
 }
 
 bool isSame(Color color1, Color color2)

@@ -35,7 +35,7 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
         }
 
         Cell* cell = cellItem->cell();
-        if(!m_board->canSelect(cell)){
+        if(!m_board->isSelectable(cell)){
             return;
         }
 
@@ -45,7 +45,7 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
         //put stone and reverse stone
         StoneItem* stoneItem = StoneFactory::getInstance()->create(nowColor);
         cellItem->setStoneItem(stoneItem);
-        m_board->reverseStonesAllDir(cell);
+        m_board->reverseStones(cell);
 
         //if now color is winner end game
         if(isEndGame()){
@@ -88,7 +88,7 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
     else if(Qt::RightButton == event->button()){
         foreach (CellItem* cellItem, m_cellItems) {
             Cell* cell = cellItem->cell();
-            QList<Cell*> cells = m_board->selectableCells();
+            QList<Cell*> cells = m_board->cacheSelectableCells();
             if(cells.contains(cell)){
                 cellItem->setBrush(QBrush(QColor("gold")));
             }
@@ -142,7 +142,7 @@ void Scene::setBoard(Board *board)
 
 bool Scene::isEndGame()
 {
-    if(m_board->isBoardFilled()){
+    if(m_board->isFilled()){
         return true;
     }
     return false;
@@ -159,7 +159,7 @@ bool Scene::isDoubleSkip(Color nextColor)
 
 bool Scene::needSkip()
 {
-    if(m_board->selectableCells().isEmpty()){
+    if(m_board->cacheSelectableCells().isEmpty()){
         return true;
     }
     return false;

@@ -3,7 +3,7 @@
 #include "Cell.h"
 #include "Stone.h"
 
-const static QVector<Board::Direction> ALL_DIRECTIONS = {
+const static QVector<Board::Direction> DIRECTIONS = {
     Board::UPPER_LEFT,
     Board::LEFT,
     Board::LOWER_LEFT,
@@ -20,6 +20,7 @@ Board::Board()
 
 Board::~Board()
 {
+    qDeleteAll(m_cells);
 }
 
 void Board::add(Cell* cell)
@@ -29,27 +30,27 @@ void Board::add(Cell* cell)
 
 void Board::checkSelectableCells(Color nowColor)
 {
-    m_selectableCells.clear();
+    m_cacheSelectableCells.clear();
 
     foreach (Cell* cell, m_cells) {
         if(cell->isFilled()){
             continue;
         }
         if(true == isReversable(cell, nowColor)){
-            m_selectableCells << cell;
+            m_cacheSelectableCells << cell;
         }
     }
 }
 
-bool Board::canSelect(Cell* cell)
+bool Board::isSelectable(Cell* cell)
 {
-    if(m_selectableCells.contains(cell)){
+    if(m_cacheSelectableCells.contains(cell)){
         return true;
     }
     return false;
 }
 
-bool Board::isBoardFilled()
+bool Board::isFilled()
 {
     foreach (Cell* cell, m_cells) {
         if(!cell->isFilled()){
@@ -59,28 +60,15 @@ bool Board::isBoardFilled()
     return true;
 }
 
-QList<Cell*> Board::selectableCells() const
+QList<Cell*> Board::cacheSelectableCells() const
 {
-    return m_selectableCells;
+    return m_cacheSelectableCells;
 }
 
-void Board::reverseStones(Cell* cell, Color oppositeColor, Board::Direction direction)
+void Board::reverseStones(Cell* startCell)
 {
-    Cell* reverseCell = cell;
-    while(oppositeColor != reverseCell->stoneColor()){
-        reverseCell->reverseStone();
-
-        reverseCell = neighborCell(reverseCell, direction);
-        if(Q_NULLPTR == reverseCell){
-            return;
-        }
-    }
-}
-
-void Board::reverseStonesAllDir(Cell* startCell)
-{
-    foreach (Direction d, ALL_DIRECTIONS) {
-        reverseStonesInLine(startCell, d);
+    foreach (Direction d, DIRECTIONS) {
+        reverseStones(startCell, d);
     }
 }
 
@@ -99,7 +87,7 @@ unsigned int Board::stoneCount(Color color)
     return count;
 }
 
-void Board::reverseStonesInLine(Cell* startCell, Board::Direction direction)
+void Board::reverseStones(Cell* startCell, Board::Direction direction)
 {
     Cell* c = startCell;
     Color oppositeColor = startCell->stoneColor();
@@ -123,19 +111,19 @@ QList<Cell*> Board::reversableNeighborCells(Cell* centerCell, Color putStoneColo
     return cells;
 }
 
-bool Board::isReversable(Cell* targetCell, Color putStoneColor)
+bool Board::isReversable(Cell* centerCell, Color putStoneColor)
 {
-    foreach (Direction d, ALL_DIRECTIONS) {
-        if(isReversable(targetCell, putStoneColor, d)){
+    foreach (Direction d, DIRECTIONS) {
+        if(isReversable(centerCell, putStoneColor, d)){
             return true;
         }
     }
     return false;
 }
 
-bool Board::isReversable(Cell* targetCell, Color putStoneColor, Board::Direction direction)
+bool Board::isReversable(Cell* startCell, Color putStoneColor, Board::Direction direction)
 {
-    Cell* neighborcell = neighborCell(targetCell, direction);
+    Cell* neighborcell = neighborCell(startCell, direction);
     if(nullptr == neighborcell){
         return false;
     }
@@ -164,7 +152,7 @@ bool Board::isReversable(Cell* targetCell, Color putStoneColor, Board::Direction
 QList<Cell*> Board::neighborCells(Cell* centerCell)
 {
     QList<Cell*> cells;
-    foreach (Direction direction, ALL_DIRECTIONS) {
+    foreach (Direction direction, DIRECTIONS) {
         Cell* c = neighborCell(centerCell, direction);
         if(nullptr != c){
             cells << c;
@@ -184,22 +172,22 @@ Cell*Board::neighborCell(Cell* centerCell, Board::Direction direction)
     return m_cells.at(index);
 }
 
-bool Board::isOutside(Cell* targetCell, Board::Direction direction)
+bool Board::isOutside(Cell* baseCell, Board::Direction direction)
 {
-    int targetCellIndex = m_cells.indexOf(targetCell);
-    int nextCellIndex   = targetCellIndex + direction;
+    int baseCellIndex = m_cells.indexOf(baseCell);
+    int nextCellIndex   = baseCellIndex + direction;
 
     if((0 > nextCellIndex) || (MAX_INDEX < nextCellIndex)){
         return true;
     }
-    if(0 == ((targetCellIndex + BOARD_SIZE) % BOARD_SIZE)){
+    if(0 == ((baseCellIndex + BOARD_SIZE) % BOARD_SIZE)){
         if((UPPER_LEFT == direction) ||
                 (UPPER == direction) ||
                 (UPPER_RIGHT == direction)){
             return true;
         }
     }
-    if((BOARD_SIZE-1) == ((targetCellIndex + BOARD_SIZE) % BOARD_SIZE)){
+    if((BOARD_SIZE-1) == ((baseCellIndex + BOARD_SIZE) % BOARD_SIZE)){
         if((LOWER_LEFT == direction) ||
                 (LOWER == direction) ||
                 (LOWER_RIGHT == direction)){

@@ -26,27 +26,32 @@ public:
     ~Board();
 
     void add(Cell* cell);
+
     void checkSelectableCells(Color nowColor);
-    bool canSelect(Cell* cell);
-    bool isBoardFilled();
-    QList<Cell*> selectableCells() const;
-    void reverseStonesAllDir(Cell* startCell);
+
+    bool isSelectable(Cell* cell);
+    bool isFilled();
+
+    void reverseStones(Cell* startCell);
+
     unsigned int stoneCount(Color color);
+    QList<Cell*> cacheSelectableCells() const;
 
 private:
-    void reverseStones(Cell* cell, Color oppositeColor, Direction direction);
-    void reverseStonesInLine(Cell* cell, Direction direction);
+    void reverseStones(Cell* startCell, Direction direction);
+
     QList<Cell*> reversableNeighborCells(Cell* centerCell, Color putStoneColor);
-    bool isReversable(Cell* targetCell, Color putStoneColor);
-    bool isReversable(Cell* targetCell, Color putStoneColor, Direction direction);
+    bool isReversable(Cell* centerCell, Color putStoneColor);
+    bool isReversable(Cell* startCell, Color putStoneColor, Direction direction);
+
     QList<Cell*> neighborCells(Cell* centerCell);
     Cell* neighborCell(Cell* centerCell, Direction direction);
-    bool isOutside(Cell* centerCell, Direction direction);
 
+    bool isOutside(Cell* baseCell, Direction direction);
 
 private:
     QList<Cell*> m_cells;
-    QList<Cell*> m_selectableCells;
+    QList<Cell*> m_cacheSelectableCells;
 };
 
 #endif // BOARD_H

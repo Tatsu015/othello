@@ -12,6 +12,7 @@ public:
     static Game* getInstance();
     void start();
     void end();
+    void reset();
 
     Turn* turn() const;
 

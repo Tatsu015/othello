@@ -17,6 +17,11 @@ void Game::end()
 
 }
 
+void Game::reset()
+{
+
+}
+
 Turn* Game::turn() const
 {
     return m_turn;

@@ -6,8 +6,8 @@
 
 enum Color {NONE, BLACK, WHITE};
 
-const unsigned int BOARD_SIZE    = 4;
-const unsigned int MAX_INDEX     = ((BOARD_SIZE*BOARD_SIZE) - 1);
+const unsigned int BOARD_SIZE    = 8;
+const int MAX_INDEX              = ((BOARD_SIZE*BOARD_SIZE) - 1);
 const double UNIT                = 80;
 const double CELL_SIZE_RAITO     = 0.9;
 const double CELL_WIDTH          = CELL_SIZE_RAITO * UNIT;
