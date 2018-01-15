@@ -17,9 +17,12 @@ public:
     void addCellItem(CellItem* cellItem);
     void setBoard(Board *board);
 
+    CellItem* cellItem(unsigned int row, unsigned int clm) const;
+
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     void updateView();
+    void reset();
 
 private:
     CellItem* clickedCellItem(QPointF clickedScenePos);

@@ -40,3 +40,8 @@ void Cell::setStone(Stone* stone)
 {
     m_stone = stone;
 }
+
+void Cell::reset()
+{
+    delete m_stone;
+}

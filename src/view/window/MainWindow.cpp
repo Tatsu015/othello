@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 #include "Common.h"
+#include "Application.h"
 #include "StoneFactory.h"
 #include "Game.h"
 #include "Turn.h"
@@ -10,6 +11,7 @@
 #include "CellItem.h"
 #include "StoneItem.h"
 
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -18,9 +20,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
     ui->graphicsView->setBackgroundBrush(Qt::gray);
 
-    Board* board = new Board();
-    Scene* scene = new Scene();
-    scene->setBoard(board);
+    Scene* scene = Application::getInstance()->scene();
+    Board* board = Application::getInstance()->board();
 
     for (unsigned int i = 0; i < BOARD_SIZE; ++i) {
         for (unsigned int j = 0; j < BOARD_SIZE; ++j) {
@@ -29,31 +30,28 @@ MainWindow::MainWindow(QWidget *parent) :
             CellItem* cellItem = new CellItem(i*CELL_WIDTH, j*CELL_HEIGHT);
             cellItem->setCell(cell);
             scene->addCellItem(cellItem);
-
-            if((((BOARD_SIZE/2) - 1) == i) && (((BOARD_SIZE/2) - 1) == j)){
-                StoneItem* stoneItem = StoneFactory::getInstance()->create(WHITE);
-                cellItem->setStoneItem(stoneItem);
-            }
-            if(((BOARD_SIZE/2) == i) && (((BOARD_SIZE/2) - 1) == j)){
-                StoneItem* stoneItem = StoneFactory::getInstance()->create(BLACK);
-                cellItem->setStoneItem(stoneItem);
-            }
-            if((((BOARD_SIZE/2) - 1) == i) && ((BOARD_SIZE/2) == j)){
-                StoneItem* stoneItem = StoneFactory::getInstance()->create(BLACK);
-                cellItem->setStoneItem(stoneItem);
-            }
-            if(((BOARD_SIZE/2) == i) && ((BOARD_SIZE/2) == j)){
-                StoneItem* stoneItem = StoneFactory::getInstance()->create(WHITE);
-                cellItem->setStoneItem(stoneItem);
-            }
         }
     }
 
-    board->checkSelectableCells(Game::getInstance()->turn()->now());
+    addStone(3, 3, WHITE);
+    addStone(3, 4, BLACK);
+    addStone(4, 3, BLACK);
+    addStone(4, 4, WHITE);
+
+    board->checkSelectableCells(Application::getInstance()->game()->turn()->now());
     ui->graphicsView->setScene(scene);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::addStone(unsigned int row, unsigned int clm, Color color)
+{
+    CellItem* cellItem = Application::getInstance()->scene()->cellItem(row, clm);
+    StoneItem* stoneItem = StoneFactory::getInstance()->createStoneItem();
+    Stone* stone = StoneFactory::getInstance()->createStone(color);
+    stoneItem->setStone(stone);
+    cellItem->setStoneItem(stoneItem);
 }

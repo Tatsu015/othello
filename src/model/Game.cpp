@@ -1,37 +1,32 @@
 #include "Game.h"
 #include "Turn.h"
 
-Game* Game::getInstance()
+
+Game::Game():
+    m_turn(new Turn()),
+    m_round(0)
 {
-    static Game s;
-    return &s;
+}
+
+Game::~Game()
+{
 }
 
 void Game::start()
 {
-
+    ++m_round;
 }
 
 void Game::end()
 {
-
 }
 
 void Game::reset()
 {
-
+    m_turn->reset();
 }
 
 Turn* Game::turn() const
 {
     return m_turn;
-}
-
-Game::Game()
-{
-    m_turn = new Turn();
-}
-
-Game::~Game()
-{
 }

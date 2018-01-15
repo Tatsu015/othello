@@ -23,3 +23,8 @@ Color Turn::now()
 {
     return m_now;
 }
+
+void Turn::reset()
+{
+    m_now = BLACK;
+}

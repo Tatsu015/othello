@@ -26,6 +26,7 @@ public:
     ~Board();
 
     void add(Cell* cell);
+    void reset();
 
     void checkSelectableCells(const Color& nowColor);
 

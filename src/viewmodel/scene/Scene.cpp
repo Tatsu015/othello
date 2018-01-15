@@ -3,10 +3,12 @@
 #include <QMessageBox>
 #include <QDebug>
 #include "Common.h"
+#include "Application.h"
 #include "StoneFactory.h"
 #include "Game.h"
 #include "Turn.h"
 #include "Board.h"
+#include "Stone.h"
 #include "Cell.h"
 #include "CellItem.h"
 #include "StoneItem.h"
@@ -29,6 +31,7 @@ void Scene::addCellItem(CellItem* cellItem)
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
     if(Qt::LeftButton == event->button()){
+        //select cell
         CellItem* cellItem = clickedCellItem(event->scenePos());
         if(Q_NULLPTR == cellItem){
             return;
@@ -39,15 +42,17 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
             return;
         }
 
-        Color nowColor = Game::getInstance()->turn()->now();
+        Color nowColor = Application::getInstance()->game()->turn()->now();
         qDebug() << "Last put color" << toString(nowColor);
 
         //put stone and reverse stone
-        StoneItem* stoneItem = StoneFactory::getInstance()->create(nowColor);
+        StoneItem* stoneItem = StoneFactory::getInstance()->createStoneItem();
+        Stone* stone = StoneFactory::getInstance()->createStone(nowColor);
+        stoneItem->setStone(stone);
         cellItem->setStoneItem(stoneItem);
         m_board->reverseStones(cell);
 
-        //if now color is winner end game
+        //check end game
         if(isEndGame()){
             updateView();
             Color color = winnerColor();
@@ -55,10 +60,9 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
             return;
         }
 
-        //continue game
         //turn change
-        Game::getInstance()->turn()->change();
-        Color nextColor = Game::getInstance()->turn()->now();
+        Application::getInstance()->game()->turn()->change();
+        Color nextColor = Application::getInstance()->game()->turn()->now();
 
         //check board status
         m_board->checkSelectableCells(nextColor);
@@ -66,8 +70,8 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
         //if need turn skip, display dialog and skip turn
         if(needSkip()){
             updateView();
-            Game::getInstance()->turn()->change();
-            Color nextColor = Game::getInstance()->turn()->now();
+            Application::getInstance()->game()->turn()->change();
+            Color nextColor = Application::getInstance()->game()->turn()->now();
             if(isDoubleSkip(nextColor)){
                 nextColor = winnerColor();
                 displayResult(nextColor);
@@ -107,23 +111,18 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
     }
 }
 
-#include <stdio.h>
 void Scene::updateView()
 {
-    QMap<Color, QString> m;
-    m[NONE] = "-";
-    m[BLACK] = "B";
-    m[WHITE] = "W";
-    QString s;
     foreach (CellItem* cellItem, m_cellItems) {
-        s += m[cellItem->cell()->stoneColor()].toStdString().c_str();
         cellItem->updateView();
     }
-//    for(int i = 0; i < 4; ++i){
-//        printf("%c%c%c%c\n",s[i+0].toLatin1(), s[i+4].toLatin1(),s[i+8].toLatin1(), s[i+12].toLatin1());
-//        fflush(nullptr);
-//    }
-//    printf("------------------------\n");
+}
+
+void Scene::reset()
+{
+    qDeleteAll(m_cellItems);
+    m_cellItems.clear();
+    m_isSkip = false;
 }
 
 CellItem*Scene::clickedCellItem(QPointF clickedScenePos)
@@ -138,6 +137,12 @@ CellItem*Scene::clickedCellItem(QPointF clickedScenePos)
 void Scene::setBoard(Board *board)
 {
     m_board = board;
+}
+
+CellItem*Scene::cellItem(unsigned int row, unsigned int clm) const
+{
+    unsigned int index = (row + 8*clm);
+    return m_cellItems.at(index);
 }
 
 bool Scene::isEndGame()

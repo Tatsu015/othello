@@ -9,7 +9,9 @@ class Turn;
 class Game
 {
 public:
-    static Game* getInstance();
+    Game();
+    ~Game();
+
     void start();
     void end();
     void reset();
@@ -18,9 +20,6 @@ public:
 
 private:
     Turn* m_turn = Q_NULLPTR;
-
-private:
-    Game();
-    ~Game();
+    unsigned int m_round;
 };
 #endif // GAME_H

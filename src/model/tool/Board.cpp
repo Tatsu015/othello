@@ -28,6 +28,13 @@ void Board::add(Cell* cell)
     m_cells << cell;
 }
 
+void Board::reset()
+{
+    foreach (Cell* cell, m_cells) {
+        cell->reset();
+    }
+}
+
 void Board::checkSelectableCells(const Color& nowColor)
 {
     m_cacheSelectableCells.clear();
@@ -80,7 +87,7 @@ unsigned int Board::stoneCount(const Color& color)
         if(nullptr == s){
             continue;
         }
-        if(color == c->stone()->color()){
+        if(color == c->stoneColor()){
             ++count;
         }
     }

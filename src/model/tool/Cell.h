@@ -15,12 +15,14 @@ public:
 
     bool isFilled();
 
+    Stone* stone() const;
+    void setStone(Stone* stone);
+
+    void reset();
+
     Color stoneColor() const;
     void setStoneColor(const Color& stoneColor);
     void reverseStone();
-
-    Stone* stone() const;
-    void setStone(Stone* stone);
 
 private:
     Stone* m_stone = Q_NULLPTR;

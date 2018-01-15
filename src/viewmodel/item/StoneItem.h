@@ -10,7 +10,7 @@ class Stone;
 class StoneItem : public QGraphicsPathItem
 {
 public:
-    StoneItem(Color color, QGraphicsItem *parent = Q_NULLPTR);
+    StoneItem(QGraphicsItem *parent = Q_NULLPTR);
     virtual ~StoneItem();
 
     Color color() const;

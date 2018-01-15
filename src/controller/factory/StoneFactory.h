@@ -11,7 +11,8 @@ class StoneFactory
 {
 public:
     static StoneFactory* getInstance();
-    StoneItem* create(Color color);
+    StoneItem* createStoneItem();
+    Stone* createStone(Color color);
 
 private:
     StoneFactory();

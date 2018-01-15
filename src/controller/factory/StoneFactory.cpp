@@ -16,11 +16,14 @@ StoneFactory::~StoneFactory()
 {
 }
 
-StoneItem*StoneFactory::create(Color color)
+StoneItem*StoneFactory::createStoneItem()
 {
-    StoneItem* stoneItem = new StoneItem(color);
-    Stone* stone = new Stone(color);
-    stoneItem->setStone(stone);
-
+    StoneItem* stoneItem = new StoneItem();
     return stoneItem;
+}
+
+Stone*StoneFactory::createStone(Color color)
+{
+    Stone* stone = new Stone(color);
+    return stone;
 }

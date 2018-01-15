@@ -11,6 +11,7 @@ public:
 
     void change();
     Color now();
+    void reset();
 
 private:
     Color m_now;

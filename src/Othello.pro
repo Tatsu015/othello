@@ -26,6 +26,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 INCLUDEPATH += \
     model/tool \
     model \
+    controller \
     controller/factory \
     view/window \
     viewmodel/item \
@@ -44,7 +45,8 @@ SOURCES += \
     main.cpp \
     model/tool/Stone.cpp \
     controller/factory/StoneFactory.cpp \
-    Common.cpp
+    Common.cpp \
+    controller/Application.cpp
 
 HEADERS += \
     model/tool/Board.h \
@@ -57,7 +59,8 @@ HEADERS += \
     viewmodel/scene/Scene.h \
     Common.h \
     model/tool/Stone.h \
-    controller/factory/StoneFactory.h
+    controller/factory/StoneFactory.h \
+    controller/Application.h
 
 FORMS += \
     view/window/MainWindow.ui
