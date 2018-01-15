@@ -23,11 +23,16 @@ public:
 
 private:
     CellItem* clickedCellItem(QPointF clickedScenePos);
-    void checkWinner(Color nowColor);
+    bool isEndGame();
+    bool isDoubleSkip(Color nextColor);
+    bool needSkip();
+    Color winnerColor();
+    void displayResult(Color winnerColor);
 
 private:
     Board* m_board = Q_NULLPTR;
     QList<CellItem*> m_cellItems;
+    bool m_isSkip;
 };
 
 #endif // SCENE_H

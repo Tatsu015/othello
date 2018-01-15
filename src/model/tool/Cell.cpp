@@ -3,6 +3,9 @@
 
 Cell::Cell()
 {
+    static int i;
+    m_num = i;
+    ++i;
 }
 
 Cell::~Cell()

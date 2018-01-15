@@ -1,6 +1,7 @@
 #include "Board.h"
 #include <QDebug>
 #include "Cell.h"
+#include "Stone.h"
 
 const static QVector<Board::Direction> ALL_DIRECTIONS = {
     Board::UPPER_LEFT,
@@ -31,6 +32,9 @@ void Board::checkSelectableCells(Color nowColor)
     m_selectableCells.clear();
 
     foreach (Cell* cell, m_cells) {
+        if(cell->isFilled()){
+            continue;
+        }
         if(true == isReversable(cell, nowColor)){
             m_selectableCells << cell;
         }
@@ -55,7 +59,7 @@ bool Board::isBoardFilled()
     return true;
 }
 
-QList<Cell*> Board::reversableCells() const
+QList<Cell*> Board::selectableCells() const
 {
     return m_selectableCells;
 }
@@ -80,6 +84,21 @@ void Board::reverseStonesAllDir(Cell* startCell)
     }
 }
 
+unsigned int Board::stoneCount(Color color)
+{
+    unsigned int count = 0;
+    foreach (Cell* c, m_cells) {
+        Stone* s = c->stone();
+        if(nullptr == s){
+            continue;
+        }
+        if(color == c->stone()->color()){
+            ++count;
+        }
+    }
+    return count;
+}
+
 void Board::reverseStonesInLine(Cell* startCell, Board::Direction direction)
 {
     Cell* c = startCell;
@@ -87,8 +106,8 @@ void Board::reverseStonesInLine(Cell* startCell, Board::Direction direction)
 
     if(isReversable(startCell, oppositeColor, direction)){
         while(oppositeColor != neighborCell(c, direction)->stoneColor()){
-            c->reverseStone();
             c = neighborCell(c, direction);
+            c->reverseStone();
         }
     }
 }

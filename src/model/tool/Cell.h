@@ -24,6 +24,7 @@ public:
 
 private:
     Stone* m_stone = Q_NULLPTR;
+    unsigned int m_num;
 };
 
 #endif // CELL_H

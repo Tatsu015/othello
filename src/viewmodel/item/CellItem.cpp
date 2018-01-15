@@ -22,6 +22,7 @@ CellItem::~CellItem()
 void CellItem::setStoneItem(StoneItem* stoneItem)
 {
     m_stoneItem = stoneItem;
+    m_cell->setStone(stoneItem->stone());
     stoneItem->setParentItem(this);
 }
 

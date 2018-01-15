@@ -29,8 +29,9 @@ public:
     void checkSelectableCells(Color nowColor);
     bool canSelect(Cell* cell);
     bool isBoardFilled();
-    QList<Cell*> reversableCells() const;
+    QList<Cell*> selectableCells() const;
     void reverseStonesAllDir(Cell* startCell);
+    unsigned int stoneCount(Color color);
 
 private:
     void reverseStones(Cell* cell, Color oppositeColor, Direction direction);

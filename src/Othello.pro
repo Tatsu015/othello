@@ -43,7 +43,8 @@ SOURCES += \
     viewmodel/scene/Scene.cpp \
     main.cpp \
     model/tool/Stone.cpp \
-    controller/factory/StoneFactory.cpp
+    controller/factory/StoneFactory.cpp \
+    Common.cpp
 
 HEADERS += \
     model/tool/Board.h \
