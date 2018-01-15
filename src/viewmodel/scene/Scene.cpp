@@ -3,13 +3,13 @@
 #include <QMessageBox>
 #include <QDebug>
 #include "Common.h"
+#include "StoneFactory.h"
 #include "Game.h"
 #include "Turn.h"
 #include "Board.h"
 #include "Cell.h"
 #include "CellItem.h"
 #include "StoneItem.h"
-#include "StoneFactory.h"
 
 Scene::Scene(QObject* parent):QGraphicsScene(parent),
     m_isSkip(false)

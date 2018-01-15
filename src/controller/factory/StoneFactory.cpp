@@ -1,6 +1,6 @@
 #include "StoneFactory.h"
-#include "StoneItem.h"
 #include "Stone.h"
+#include "StoneItem.h"
 
 StoneFactory* StoneFactory::getInstance()
 {

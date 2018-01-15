@@ -1,8 +1,8 @@
 #include "StoneItem.h"
-#include "Stone.h"
 #include <QBrush>
 #include <QPen>
 #include <QDebug>
+#include "Stone.h"
 
 const static QMap<Color ,Qt::GlobalColor> COLOR = {
     {BLACK, Qt::black},

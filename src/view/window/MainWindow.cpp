@@ -2,13 +2,13 @@
 #include "ui_MainWindow.h"
 #include "Common.h"
 #include "StoneFactory.h"
-#include "Scene.h"
 #include "Game.h"
 #include "Turn.h"
-#include "CellItem.h"
-#include "StoneItem.h"
 #include "Board.h"
 #include "Cell.h"
+#include "Scene.h"
+#include "CellItem.h"
+#include "StoneItem.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),

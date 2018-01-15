@@ -1,6 +1,6 @@
-#include "Common.h"
 #include <QString>
 #include <QMap>
+#include "Common.h"
 
 enum Color anotherColor(const Color& color)
 {

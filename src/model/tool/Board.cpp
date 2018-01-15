@@ -1,5 +1,5 @@
-#include "Board.h"
 #include <QDebug>
+#include "Board.h"
 #include "Cell.h"
 #include "Stone.h"
 
