@@ -21,7 +21,6 @@ public:
 
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
-    void updateView();
     void reset();
 
 private:

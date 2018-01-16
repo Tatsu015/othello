@@ -3,8 +3,9 @@
 
 
 #include "Common.h"
+#include "StoneObserver.h"
 
-class Stone
+class Stone : public StoneObserver
 {
 public:
     Stone(Color color);

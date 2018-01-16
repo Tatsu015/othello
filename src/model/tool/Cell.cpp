@@ -29,6 +29,7 @@ Color Cell::stoneColor() const
 void Cell::reverseStone()
 {
     m_stone->changeColor();
+    m_stone->update();
 }
 
 Stone* Cell::stone() const

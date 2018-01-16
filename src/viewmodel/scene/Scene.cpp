@@ -48,13 +48,14 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
         //put stone and reverse stone
         StoneItem* stoneItem = StoneFactory::getInstance()->createStoneItem();
         Stone* stone = StoneFactory::getInstance()->createStone(nowColor);
+
         stoneItem->setStone(stone);
+        stone->setStoneItem(stoneItem);
         cellItem->setStoneItem(stoneItem);
         m_board->reverseStones(cell);
 
         //check end game
         if(isEndGame()){
-            updateView();
             Color color = winnerColor();
             displayResult(color);
             return;
@@ -69,7 +70,6 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 
         //if need turn skip, display dialog and skip turn
         if(needSkip()){
-            updateView();
             Application::getInstance()->game()->turn()->change();
             Color nextColor = Application::getInstance()->game()->turn()->now();
             if(isDoubleSkip(nextColor)){
@@ -98,8 +98,6 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
             }
         }
     }
-
-    updateView();
 }
 
 void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
@@ -111,17 +109,11 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
     }
 }
 
-void Scene::updateView()
-{
-    foreach (CellItem* cellItem, m_cellItems) {
-        cellItem->updateView();
-    }
-}
-
 void Scene::reset()
 {
-    qDeleteAll(m_cellItems);
-    m_cellItems.clear();
+    foreach (CellItem* cellItem, m_cellItems) {
+        cellItem->reset();
+    }
     m_isSkip = false;
 }
 

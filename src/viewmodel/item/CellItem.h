@@ -16,6 +16,7 @@ public:
     void setStoneItem(StoneItem* stoneItem);
 
     void updateView();
+    void reset();
     bool existStone();
 
     Cell *cell() const;

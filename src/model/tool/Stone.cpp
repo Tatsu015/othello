@@ -1,6 +1,7 @@
 #include "Stone.h"
+#include "StoneObserver.h"
 
-Stone::Stone(Color color):
+Stone::Stone(Color color):StoneObserver(),
     m_color(color)
 {
 }

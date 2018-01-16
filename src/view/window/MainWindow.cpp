@@ -7,6 +7,7 @@
 #include "Turn.h"
 #include "Board.h"
 #include "Cell.h"
+#include "Stone.h"
 #include "Scene.h"
 #include "CellItem.h"
 #include "StoneItem.h"
@@ -17,6 +18,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    connect(ui->actionReset, &QAction::triggered, []{
+        Application::getInstance()->reset();
+    });
+
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
     ui->graphicsView->setBackgroundBrush(Qt::gray);
 
@@ -53,5 +59,6 @@ void MainWindow::addStone(unsigned int row, unsigned int clm, Color color)
     StoneItem* stoneItem = StoneFactory::getInstance()->createStoneItem();
     Stone* stone = StoneFactory::getInstance()->createStone(color);
     stoneItem->setStone(stone);
+    stone->setStoneItem(stoneItem);
     cellItem->setStoneItem(stoneItem);
 }

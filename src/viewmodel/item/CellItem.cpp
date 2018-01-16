@@ -26,11 +26,9 @@ void CellItem::setStoneItem(StoneItem* stoneItem)
     stoneItem->setParentItem(this);
 }
 
-void CellItem::updateView()
+void CellItem::reset()
 {
-    if(Q_NULLPTR != m_stoneItem){
-        m_stoneItem->updateView();
-    }
+    delete m_stoneItem;
 }
 
 bool CellItem::existStone()
