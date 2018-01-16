@@ -50,6 +50,9 @@ private:
 
     bool isOutside(Cell* baseCell, const Direction& direction);
 
+    bool isTop(Cell* cell);
+    bool isBottom(Cell* cell);
+
 private:
     QList<Cell*> m_cells;
     QList<Cell*> m_cacheSelectableCells;
