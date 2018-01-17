@@ -10,7 +10,7 @@ StoneObserver::~StoneObserver()
 {
 }
 
-void StoneObserver::update()
+void StoneObserver::notify()
 {
     m_stoneItem->updateView();
 }
@@ -18,5 +18,5 @@ void StoneObserver::update()
 void StoneObserver::setStoneItem(StoneItem* stoneItem)
 {
     m_stoneItem = stoneItem;
-    update();
+    notify();
 }

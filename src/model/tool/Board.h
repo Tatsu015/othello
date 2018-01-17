@@ -4,10 +4,11 @@
 
 #include <QList>
 #include "Common.h"
+#include "BoardObserver.h"
 
 class Cell;
 
-class Board
+class Board:public BoardObserver
 {
 public:
     enum Direction{

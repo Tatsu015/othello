@@ -14,7 +14,7 @@ const static QVector<Board::Direction> DIRECTIONS = {
     Board::LOWER_RIGHT
 };
 
-Board::Board()
+Board::Board():BoardObserver()
 {
 }
 

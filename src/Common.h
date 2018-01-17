@@ -23,8 +23,9 @@ const double       STONE_HEIGHT        = (STONE_SIZE_RAITO * UNIT);
 const double       STONE_WIDTH_OFFSET  = (0.5 * (CELL_WIDTH  - STONE_WIDTH));
 const double       STONE_HEIGHT_OFFSET = (0.5 * (CELL_HEIGHT - STONE_HEIGHT));
 
-enum Color anotherColor(const Color& color);
+Qt::GlobalColor toColor(const Color& color);
 QString toString(const Color& color);
+enum Color anotherColor(const Color& color);
 bool isSame(const Color& color1, const Color& color2);
 bool isAnother(const Color& color1, const Color& color2);
 

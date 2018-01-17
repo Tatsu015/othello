@@ -34,6 +34,7 @@ void Flow::progress()
     m_cellItem->setStoneItem(stoneItem);
     Cell* c = m_cellItem->cell();
     m_board->reverseStones(c);
+    m_board->notify();
 
     //check end game
     if(isEndGame()){

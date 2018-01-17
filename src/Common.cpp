@@ -12,7 +12,7 @@ enum Color anotherColor(const Color& color)
 
 QString toString(const Color& color)
 {
-    static QMap<Color, QString> COLOR_TO_STR{
+    const static QMap<Color, QString> COLOR_TO_STR{
         {NONE, "None"},
         {WHITE, "White"},
         {BLACK, "Black"}
@@ -35,4 +35,14 @@ bool isAnother(const Color& color1, const Color& color2)
         return true;
     }
     return false;
+}
+
+Qt::GlobalColor toColor(const Color& color)
+{
+    const static QMap<Color ,Qt::GlobalColor> COLOR = {
+        {BLACK, Qt::black},
+        {WHITE, Qt::white}
+    };
+
+    return COLOR[color];
 }

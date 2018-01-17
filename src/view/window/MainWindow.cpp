@@ -23,8 +23,6 @@ MainWindow::MainWindow(QWidget *parent) :
         Application::getInstance()->reset();
     });
 
-    ui->graphicsView->setRenderHint(QPainter::Antialiasing);
-    ui->graphicsView->setBackgroundBrush(Qt::gray);
 
     Scene* scene = Application::getInstance()->scene();
     Board* board = Application::getInstance()->board();
@@ -46,6 +44,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     board->checkSelectableCells(Application::getInstance()->game()->turn()->now());
     ui->graphicsView->setScene(scene);
+    ui->graphicsView->setRenderHint(QPainter::Antialiasing);
+    ui->graphicsView->setBackgroundBrush(Qt::gray);
+    ui->statusBar->setBoard(board);
+    board->setStatusBar(ui->statusBar);
 }
 
 MainWindow::~MainWindow()

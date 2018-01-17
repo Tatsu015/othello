@@ -31,6 +31,7 @@ INCLUDEPATH += \
     controller/factory \
     controller/flow \
     view/window \
+    view/widget \
     viewmodel/item \
     viewmodel/scene
 
@@ -50,7 +51,9 @@ SOURCES += \
     Common.cpp \
     controller/Application.cpp \
     model/observer/StoneObserver.cpp \
-    controller/flow/Flow.cpp
+    controller/flow/Flow.cpp \
+    model/observer/BoardObserver.cpp \
+    view/widget/StatusBar.cpp
 
 HEADERS += \
     model/tool/Board.h \
@@ -66,7 +69,9 @@ HEADERS += \
     controller/factory/StoneFactory.h \
     controller/Application.h \
     model/observer/StoneObserver.h \
-    controller/flow/Flow.h
+    controller/flow/Flow.h \
+    model/observer/BoardObserver.h \
+    view/widget/StatusBar.h
 
 FORMS += \
     view/window/MainWindow.ui

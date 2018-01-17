@@ -2,12 +2,8 @@
 #include <QBrush>
 #include <QPen>
 #include <QDebug>
+#include "Common.h"
 #include "Stone.h"
-
-const static QMap<Color ,Qt::GlobalColor> COLOR = {
-    {BLACK, Qt::black},
-    {WHITE, Qt::white}
-};
 
 StoneItem::StoneItem(QGraphicsItem* parent):QGraphicsPathItem(parent)
 {
@@ -29,7 +25,7 @@ Color StoneItem::color() const
 void StoneItem::setColor(const Color& color)
 {
     m_stone->setColor(color);
-    setBrush(COLOR[color]);
+    setBrush(toColor(color));
 }
 
 Stone* StoneItem::stone() const
@@ -40,10 +36,10 @@ Stone* StoneItem::stone() const
 void StoneItem::setStone(Stone* stone)
 {
     m_stone = stone;
-    setBrush(COLOR[m_stone->color()]);
+    setBrush(toColor(m_stone->color()));
 }
 
 void StoneItem::updateView()
 {
-    setBrush(COLOR[m_stone->color()]);
+    setBrush(toColor(m_stone->color()));
 }
