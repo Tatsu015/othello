@@ -4,6 +4,7 @@
 
 #include <qcompilerdetection.h>
 
+class Flow;
 class Game;
 class Board;
 class Scene;
@@ -22,6 +23,7 @@ public:
     Scene* scene() const;
 
 private:
+    Flow*  m_flow  = Q_NULLPTR;
     Game*  m_game  = Q_NULLPTR;
     Board* m_board = Q_NULLPTR;
     Scene* m_scene = Q_NULLPTR;

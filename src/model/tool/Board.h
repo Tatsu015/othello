@@ -38,6 +38,8 @@ public:
     unsigned int stoneCount(const Color& color);
     QList<Cell*> cacheSelectableCells() const;
 
+    Color greater();
+
 private:
     void reverseStones(Cell* startCell, const Direction& direction);
 

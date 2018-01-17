@@ -72,6 +72,22 @@ QList<Cell*> Board::cacheSelectableCells() const
     return m_cacheSelectableCells;
 }
 
+Color Board::greater()
+{
+    unsigned int whiteStoneCount = stoneCount(WHITE);
+    unsigned int blackStoneCount = stoneCount(BLACK);
+
+    if(whiteStoneCount < blackStoneCount){
+        return BLACK;
+    }
+    else if(whiteStoneCount > blackStoneCount){
+        return WHITE;
+    }
+    else{
+        return NONE;
+    }
+}
+
 void Board::reverseStones(Cell* startCell)
 {
     foreach (Direction d, DIRECTIONS) {

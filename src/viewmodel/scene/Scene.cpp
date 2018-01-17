@@ -5,6 +5,7 @@
 #include "Common.h"
 #include "Application.h"
 #include "StoneFactory.h"
+#include "Flow.h"
 #include "Game.h"
 #include "Turn.h"
 #include "Board.h"
@@ -13,8 +14,7 @@
 #include "CellItem.h"
 #include "StoneItem.h"
 
-Scene::Scene(QObject* parent):QGraphicsScene(parent),
-    m_isSkip(false)
+Scene::Scene(QObject* parent):QGraphicsScene(parent)
 {
 }
 
@@ -42,52 +42,8 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
             return;
         }
 
-        Color nowColor = Application::getInstance()->game()->turn()->now();
-        qDebug() << "Last put color" << toString(nowColor);
-
-        //put stone and reverse stone
-        StoneItem* stoneItem = StoneFactory::getInstance()->createStoneItem();
-        Stone* stone = StoneFactory::getInstance()->createStone(nowColor);
-
-        stoneItem->setStone(stone);
-        stone->setStoneItem(stoneItem);
-        cellItem->setStoneItem(stoneItem);
-        m_board->reverseStones(cell);
-
-        //check end game
-        if(isEndGame()){
-            Color color = winnerColor();
-            displayResult(color);
-            return;
-        }
-
-        //turn change
-        Application::getInstance()->game()->turn()->change();
-        Color nextColor = Application::getInstance()->game()->turn()->now();
-
-        //check board status
-        m_board->checkSelectableCells(nextColor);
-
-        //if need turn skip, display dialog and skip turn
-        if(needSkip()){
-            Application::getInstance()->game()->turn()->change();
-            Color nextColor = Application::getInstance()->game()->turn()->now();
-            if(isDoubleSkip(nextColor)){
-                nextColor = winnerColor();
-                displayResult(nextColor);
-                return;
-            }
-            QMessageBox::information(Q_NULLPTR,
-                                     "Infomation",
-                                     "Can not put stone anyware!\n"
-                                     "Skip turn!");
-            m_isSkip = true;
-        }
-        else{
-            m_isSkip = false;
-        }
-        qDebug() << "White : " << m_board->stoneCount(WHITE);
-        qDebug() << "Black : " << m_board->stoneCount(BLACK);
+        m_flow->setCellItem(cellItem);
+        m_flow->progress();
     }
     else if(Qt::RightButton == event->button()){
         foreach (CellItem* cellItem, m_cellItems) {
@@ -114,7 +70,6 @@ void Scene::reset()
     foreach (CellItem* cellItem, m_cellItems) {
         cellItem->reset();
     }
-    m_isSkip = false;
 }
 
 CellItem*Scene::clickedCellItem(QPointF clickedScenePos)
@@ -126,6 +81,11 @@ CellItem*Scene::clickedCellItem(QPointF clickedScenePos)
     return dynamic_cast<CellItem*>(clickedItems.at(0));
 }
 
+void Scene::setFlow(Flow* flow)
+{
+    m_flow = flow;
+}
+
 void Scene::setBoard(Board *board)
 {
     m_board = board;
@@ -133,61 +93,6 @@ void Scene::setBoard(Board *board)
 
 CellItem*Scene::cellItem(unsigned int row, unsigned int clm) const
 {
-    unsigned int index = (row + 8*clm);
+    unsigned int index = (row + BOARD_SIZE*clm);
     return m_cellItems.at(index);
-}
-
-bool Scene::isEndGame()
-{
-    if(m_board->isFilled()){
-        return true;
-    }
-    return false;
-}
-
-bool Scene::isDoubleSkip(const Color& nextColor)
-{
-    m_board->checkSelectableCells(nextColor);
-    if(needSkip()){
-        return true;
-    }
-    return false;
-}
-
-bool Scene::needSkip()
-{
-    if(m_board->cacheSelectableCells().isEmpty()){
-        return true;
-    }
-    return false;
-}
-
-Color Scene::winnerColor()
-{
-    unsigned int whiteStoneCount = m_board->stoneCount(WHITE);
-    unsigned int blackStoneCount = m_board->stoneCount(BLACK);
-
-    if(whiteStoneCount < blackStoneCount){
-        return BLACK;
-    }
-    else if(whiteStoneCount > blackStoneCount){
-        return WHITE;
-    }
-    else{
-        return NONE;
-    }
-}
-
-void Scene::displayResult(const Color& winnerColor)
-{
-    QString message;
-    if(NONE == winnerColor){
-        message = "Draw...   ";
-    }
-    else{
-        message = toString(winnerColor) + " win !";
-    }
-    QMessageBox::information(Q_NULLPTR,
-                             "Infomation",
-                             message);
 }

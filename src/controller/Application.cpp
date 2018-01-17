@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "Flow.h"
 #include "Game.h"
 #include "Board.h"
 #include "Scene.h"
@@ -32,11 +33,14 @@ Scene* Application::scene() const
 }
 
 Application::Application():
+    m_flow(new Flow()),
     m_game(new Game()),
     m_board(new Board()),
     m_scene(new Scene())
 {
     m_scene->setBoard(m_board);
+    m_scene->setFlow(m_flow);
+    m_flow->setBoard(m_board);
 }
 
 Application::~Application()

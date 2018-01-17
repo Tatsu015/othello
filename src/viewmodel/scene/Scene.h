@@ -7,6 +7,7 @@
 
 class Board;
 class CellItem;
+class Flow;
 
 class Scene : public QGraphicsScene
 {
@@ -22,19 +23,16 @@ public:
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     void reset();
+    void setFlow(Flow* flow);
 
 private:
     CellItem* clickedCellItem(QPointF clickedScenePos);
-    bool isEndGame();
-    bool isDoubleSkip(const Color& nextColor);
-    bool needSkip();
-    Color winnerColor();
-    void displayResult(const Color& winnerColor);
+
 
 private:
     Board* m_board = Q_NULLPTR;
     QList<CellItem*> m_cellItems;
-    bool m_isSkip;
+    Flow* m_flow = Q_NULLPTR;
 };
 
 #endif // SCENE_H

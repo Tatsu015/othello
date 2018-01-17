@@ -39,10 +39,10 @@ MainWindow::MainWindow(QWidget *parent) :
         }
     }
 
-    addStone(3, 3, WHITE);
-    addStone(3, 4, BLACK);
-    addStone(4, 3, BLACK);
-    addStone(4, 4, WHITE);
+    addStone(INIT_UPPER, INIT_LEFT , WHITE);
+    addStone(INIT_UPPER, INIT_RIGHT, BLACK);
+    addStone(INIT_LOWER, INIT_LEFT , BLACK);
+    addStone(INIT_LOWER, INIT_RIGHT, WHITE);
 
     board->checkSelectableCells(Application::getInstance()->game()->turn()->now());
     ui->graphicsView->setScene(scene);
