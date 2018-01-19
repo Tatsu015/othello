@@ -1,5 +1,7 @@
 #include "Flow.h"
+#include <QApplication>
 #include <QMessageBox>
+#include <QBitmap>
 #include <QDebug>
 #include "Application.h"
 #include "StoneFactory.h"
@@ -46,6 +48,14 @@ void Flow::progress()
     //turn change
     Application::getInstance()->game()->turn()->change();
     Color nextColor = Application::getInstance()->game()->turn()->now();
+
+    if(BLACK == nextColor){
+        QCursor myCursor = QCursor(QPixmap(CURSOR_ICON_PATH));
+        QApplication::setOverrideCursor(myCursor);
+    }
+    else{
+        QApplication::setOverrideCursor(QCursor(Qt::ArrowCursor));
+    }
 
     //check board status
     m_board->checkSelectableCells(nextColor);

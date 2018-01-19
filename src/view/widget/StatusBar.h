@@ -17,13 +17,8 @@ public:
     void setBoard(Board* board);
     void updateView();
 
-    void paintEvent(QPaintEvent* e);
-
 private:
     Board*   m_board     = Q_NULLPTR;
-    QLabel*  m_iconLabel = Q_NULLPTR;
-    QLabel*  m_textLabel = Q_NULLPTR;
-    QPixmap* m_pixmap    = Q_NULLPTR;
 };
 
 #endif // STATUSBAR_H

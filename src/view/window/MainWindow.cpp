@@ -48,6 +48,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->graphicsView->setBackgroundBrush(Qt::gray);
     ui->statusBar->setBoard(board);
     board->setStatusBar(ui->statusBar);
+    ui->statusBar->updateView();
+
+    QCursor myCursor = QCursor(QPixmap(CURSOR_ICON_PATH));
+    QApplication::setOverrideCursor(myCursor);
 }
 
 MainWindow::~MainWindow()

@@ -22,6 +22,7 @@ const double       STONE_WIDTH         = (STONE_SIZE_RAITO * UNIT);
 const double       STONE_HEIGHT        = (STONE_SIZE_RAITO * UNIT);
 const double       STONE_WIDTH_OFFSET  = (0.5 * (CELL_WIDTH  - STONE_WIDTH));
 const double       STONE_HEIGHT_OFFSET = (0.5 * (CELL_HEIGHT - STONE_HEIGHT));
+const QString      CURSOR_ICON_PATH    = "../resource/icon/black-cursol.png";
 
 Qt::GlobalColor toColor(const Color& color);
 QString toString(const Color& color);

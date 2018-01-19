@@ -29,7 +29,6 @@ private:
     Board*    m_board    = Q_NULLPTR;
     CellItem* m_cellItem = Q_NULLPTR;
     bool m_isSkiped;
-
 };
 
 #endif // FLOW_H

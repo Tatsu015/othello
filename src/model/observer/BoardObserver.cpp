@@ -11,7 +11,7 @@ BoardObserver::~BoardObserver()
 
 void BoardObserver::notify()
 {
-    m_statusBar->update();
+    m_statusBar->updateView();
 }
 
 void BoardObserver::setStatusBar(StatusBar* statusBar)
